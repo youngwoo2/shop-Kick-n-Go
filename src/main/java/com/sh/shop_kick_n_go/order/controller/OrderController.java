@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class OrderController {
 
     @GetMapping("/create")
-    public void create() {}
+    public String create() {
+        return "/index";
+    }
 
 }
