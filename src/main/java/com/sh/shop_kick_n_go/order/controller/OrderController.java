@@ -10,9 +10,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/order")
 public class OrderController {
 
-    @GetMapping("/create")
+    @GetMapping("/charts")
     public String create() {
-        return "/index";
+        return "/charts-chartjs";
+    }
+    @GetMapping("/apex-charts")
+    public String apexCharts() {
+        return "/charts-apexcharts";
     }
 
+    @GetMapping("/e-charts")
+    public String echarts() {
+        return "/charts-echarts";
+    }
 }

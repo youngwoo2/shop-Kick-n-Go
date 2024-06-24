@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <title>Charts / Chart.js - NiceAdmin Bootstrap Template</title>
   <meta content="" name="description">
@@ -411,17 +413,17 @@
         </a>
         <ul id="charts-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="charts-chartjs.html" class="active">
+            <a href="./app/order/charts" class="active">
               <i class="bi bi-circle"></i><span>Chart.js</span>
             </a>
           </li>
           <li>
-            <a href="charts-apexcharts.html">
+            <a href="./apex-charts">
               <i class="bi bi-circle"></i><span>ApexCharts</span>
             </a>
           </li>
           <li>
-            <a href="charts-echarts.html">
+            <a href="./e-charts">
               <i class="bi bi-circle"></i><span>ECharts</span>
             </a>
           </li>
@@ -531,7 +533,10 @@
 
               <!-- Line Chart -->
               <canvas id="lineChart" style="max-height: 400px;"></canvas>
-              <script>
+
+              <script th:inline="javascript">
+
+
                 document.addEventListener("DOMContentLoaded", () => {
                   new Chart(document.querySelector('#lineChart'), {
                     type: 'line',
