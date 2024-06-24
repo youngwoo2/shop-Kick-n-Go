@@ -15,7 +15,7 @@ import java.util.List;
 
 @Controller
 @Slf4j
-@RequestMapping(value = "/NiceAdmin")
+@RequestMapping(value = "/product")
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductQueryService productQueryService;
@@ -23,10 +23,11 @@ public class ProductController {
 
 //    @RequestMapping(value = "/NiceAdmin/tables-data", method = RequestMethod.GET)
     @GetMapping("/tables-data")
-    public void list(Model model){
+    public String list(Model model){
         log.info("GET /product/list");
         List<ProductDto> products = productQueryService.findAll();
         model.addAttribute("products", products);
+        return "product-tables-data";
     }
 
 //    @RequestMapping(value = "/NiceAdmin/forms-elements", method = RequestMethod.POST)
