@@ -14,4 +14,5 @@ public class DeliveryDto {
     private int orderId;
     private String trackingNumber;
     private Timestamp shippingDate;
+    private OrderDto orderDto;
 }

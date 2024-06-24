@@ -1,5 +1,6 @@
 package com.sh.shop_kick_n_go.order.controller;
 
+import com.sh.shop_kick_n_go.order.model.dto.DeliveryDto;
 import com.sh.shop_kick_n_go.order.model.dto.OrderDto;
 import com.sh.shop_kick_n_go.order.model.service.OrderQueryService;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +26,9 @@ public class OrderController {
         model.addAttribute("orders", orders);
     }
 
-//    @GetMapping("/test")
-//        public String test() {
-//        return "NiceAdmin/tables-general";
-//    }
+    @GetMapping("/delivery-tables-data")
+    public void deliveryList(Model model) {
+        List<DeliveryDto> deliveries = orderQueryService.findAllDelivery();
+        model.addAttribute("deliveries", deliveries);
+    }
 }

@@ -1,5 +1,6 @@
 package com.sh.shop_kick_n_go.order.model.dao;
 
+import com.sh.shop_kick_n_go.order.model.dto.DeliveryDto;
 import com.sh.shop_kick_n_go.order.model.dto.OrderDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,5 +32,19 @@ class OrderMapperTest {
                     System.out.println(m);
                     return m != null;
                 });
+    }
+
+    @Test
+    @DisplayName("배송")
+    void test2() {
+        // given
+        // when
+        List<DeliveryDto> deliveries = orderMapper.findAllDelivery();
+        System.out.println(deliveries);
+        // then
+        assertThat(deliveries)
+                .isNotNull()
+                .isNotEmpty()
+                .allMatch((d) -> d != null);
     }
 }
