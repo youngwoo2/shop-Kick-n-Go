@@ -360,45 +360,35 @@
       </li><!-- End Components Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-journal-text"></i><span>Forms</span><i class="bi bi-chevron-down ms-auto"></i>
+        <a class="nav-link" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-journal-text"></i><span>상품관리</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <ul id="forms-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
           <li>
             <a href="forms-elements.html">
-              <i class="bi bi-circle"></i><span>Form Elements</span>
+              <i class="bi bi-circle"></i><span>상품등록</span>
             </a>
           </li>
           <li>
-            <a href="forms-layouts.html">
-              <i class="bi bi-circle"></i><span>Form Layouts</span>
-            </a>
-          </li>
-          <li>
-            <a href="forms-editors.html">
-              <i class="bi bi-circle"></i><span>Form Editors</span>
-            </a>
-          </li>
-          <li>
-            <a href="forms-validation.html">
-              <i class="bi bi-circle"></i><span>Form Validation</span>
+            <a href="tables-data.html" class="active">
+              <i class="bi bi-circle"></i><span>상품조회/수정</span>
             </a>
           </li>
         </ul>
-      </li><!-- End Forms Nav -->
+      </li><!-- 상품관리 Nav 끝 -->
 
       <li class="nav-item">
-        <a class="nav-link " data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="tables-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+        <ul id="tables-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
             <a href="tables-general.html">
               <i class="bi bi-circle"></i><span>General Tables</span>
             </a>
           </li>
           <li>
-            <a href="tables-data.html" class="active">
+            <a href="tables-data.html">
               <i class="bi bi-circle"></i><span>Data Tables</span>
             </a>
           </li>
@@ -509,12 +499,12 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Data Tables</h1>
+      <h1>상품조회/수정</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Tables</li>
-          <li class="breadcrumb-item active">Data</li>
+          <li class="breadcrumb-item"><a href="index.html">홈</a></li>
+          <li class="breadcrumb-item">상품관리</li>
+          <li class="breadcrumb-item active">상품조회/수정</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -523,97 +513,196 @@
       <div class="row">
         <div class="col-lg-12">
 
-          <style>
-            .card-body {
-                overflow-x: auto;
-                white-space: nowrap;
-            }
-            .datatable th, .datatable td {
-                min-width: 120px; /* Adjust as needed */
-            }
-        </style>
-
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">회원관리</h5>
-              <p>회원 관리는 여기서 하시면 <a href="https://github.com/fiduswriter/Simple-DataTables" target="_blank">Simple DataTables</a> library. Just add <code>.datatable</code> class name to any table you wish to conver to a datatable. Check for <a href="https://fiduswriter.github.io/simple-datatables/demos/" target="_blank">more examples</a>.</p>
+              <h5 class="card-title">상품조회/수정</h5>
+              <p>상품조회를 위해 검색어를 입력하시고, 수정이 필요한 항목을 하나씩 선택하십시오.</p>
 
               <!-- Table with stripped rows -->
-              <table class="table datatable">
-                <thead>
-                    <tr>
-                        <th>user_id</th>
-                        <th>user_name</th>
-                        <th>gender</th>
-                        <th>user_address</th>
-                        <th>address_code</th>
-                        <th>user_grade</th>
-                        <th>user_consumption</th>
-                        <th>created_date</th>
-                        <th>withdrawal_status</th>
+              <div style="width: 100%; overflow: auto;">
+                <table class="table datatable" style="white-space: nowrap;">
+                  <thead>
+                  <tr>
+                    <th style="width: 20%;">
+                      <input class="form-check-input" type="checkbox" id="gridCheck">
+                    </th>
+                    <th><b>상</b>품코드</th>
+                    <th>카테고리</th>
+                    <th>상품명</th>
+                    <th data-type="number">판매가</th>
+                    <th>사이즈</th>
+                    <th>컬러</th>
+                    <th data-type="number">재고수량</th>
+                    <th>이미지</th>
+                    <th>소재</th>
+                    <th>판매상태</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    <tr th:each="product, stat : ${products}" th:object="${product}">
+                      <td th:text="*{productId}"></td>
+                      <td th:text="*{category}"></td>
+                      <td th:text="*{productName}"></td>
+                      <td th:text="*{price}"></td>
+                      <td th:text="*{size}"></td>
+                      <td th:text="*{color}"></td>
+                      <td th:text="*{inventoryQuantity}"></td>
+                      <td th:text="*{image}"></td>
+                      <td th:text="*{material}"></td>
+                      <td th:text="*{orderableStatus}"></td>
                     </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>John Doe</td>
-                        <td>Male</td>
-                        <td>123 Main St, Springfield</td>
-                        <td>SP123</td>
-                        <td>A</td>
-                        <td>$1500</td>
-                        <td>2023/05/12</td>
-                        <td>Active</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Jane Smith</td>
-                        <td>Female</td>
-                        <td>456 Elm St, Shelbyville</td>
-                        <td>SH456</td>
-                        <td>B</td>
-                        <td>$2000</td>
-                        <td>2022/07/19</td>
-                        <td>Inactive</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Emily Johnson</td>
-                        <td>Female</td>
-                        <td>789 Oak St, Capital City</td>
-                        <td>CC789</td>
-                        <td>C</td>
-                        <td>$2500</td>
-                        <td>2021/11/23</td>
-                        <td>Active</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Michael Brown</td>
-                        <td>Male</td>
-                        <td>101 Pine St, Ogdenville</td>
-                        <td>OG101</td>
-                        <td>B</td>
-                        <td>$1750</td>
-                        <td>2023/01/05</td>
-                        <td>Inactive</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Jessica Williams</td>
-                        <td>Female</td>
-                        <td>202 Cedar St, North Haverbrook</td>
-                        <td>NH202</td>
-                        <td>A</td>
-                        <td>$3000</td>
-                        <td>2020/08/30</td>
-                        <td>Active</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            
+                  </tbody>
+                </table>
+              </div>
               <!-- End Table with stripped rows -->
+
+              <!-- 수정 버튼 -->
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable">
+                수정
+              </button>
+              <div class="modal fade" id="modalDialogScrollable" tabindex="-1">
+                <div class="modal-dialog modal-dialog-scrollable">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">상품수정</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                      <div class="row mb-3">
+                        <label for="inputText" class="col-sm-2 col-form-label">상품코드</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" disabled>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">카테고리</label>
+                        <div class="col-sm-10">
+                          <select class="form-select" aria-label="Default select example">
+                            <option value="1" selected>men</option>
+                            <option value="2">women</option>
+                            <option value="3">kids</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <label for="inputText" class="col-sm-2 col-form-label">상품명</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" required>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <label for="inputNumber" class="col-sm-2 col-form-label">판매가</label>
+                        <div class="col-sm-10">
+                          <input type="number" class="form-control" placeholder="숫자만 입력 (원)" required>
+                        </div>
+                      </div>
+
+                      <!-- 판매가 뒤에 '원' 넣기
+                      <div class="row mb-5">
+                        <div class="input-group mb-3">
+                          <input type="text" class="form-control" placeholder="숫자만 입력" aria-label="숫자만 입력" aria-describedby="basic-addon2">
+                          <span class="input-group-text" id="basic-addon2">원</span>
+                        </div>
+                      </div>
+                      -->
+
+                      <div class="row mb-3">
+                        <label for="inputNumber" class="col-sm-2 col-form-label">사이즈</label>
+                        <div class="col-sm-10">
+                          <input type="number" class="form-control" placeholder="숫자만 입력" required>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <label for="inputText" class="col-sm-2 col-form-label">컬러</label>
+                        <div class="col-sm-10">
+                          <input type="text" class="form-control" required>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <label for="inputNumber" class="col-sm-2 col-form-label">재고수량</label>
+                        <div class="col-sm-10">
+                          <input type="number" class="form-control" placeholder="숫자만 입력 (개)" required>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <label for="inputNumber" class="col-sm-2 col-form-label">이미지</label>
+                        <div class="col-sm-10">
+                          <input class="form-control" type="file" id="formFile" required>
+                        </div>
+                      </div>
+
+                      <fieldset class="row mb-3">
+                        <legend class="col-form-label col-sm-2 pt-0">소재</legend>
+                        <div class="col-sm-10">
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gridRadios2" id="gridRadios1" value="option1" checked>
+                            <label class="form-check-label" for="gridRadios1">
+                              가죽
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gridRadios2" id="gridRadios2" value="option2">
+                            <label class="form-check-label" for="gridRadios2">
+                              합성섬유
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gridRadios2" id="gridRadios3" value="option3">
+                            <label class="form-check-label" for="gridRadios3">
+                              캔버스
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gridRadios2" id="gridRadios4" value="option4">
+                            <label class="form-check-label" for="gridRadios4">
+                              메쉬
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gridRadios2" id="gridRadios5" value="option5">
+                            <label class="form-check-label" for="gridRadios5">
+                              기타
+                            </label>
+                          </div>
+                        </div>
+                      </fieldset>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- 수정 버튼 끝-->
+
+              <!-- 삭제 버튼 -->
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">
+                삭제
+              </button>
+              <div class="modal fade" id="basicModal" tabindex="-1">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">상품삭제</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      상품삭제를 완료하시겠습니까?
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                      <button type="button" class="btn btn-primary">저장</button>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- 삭제 버튼 끝 -->
 
             </div>
           </div>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sh.shop_kick_n_go.product.model.dao.ProductMapper">
+    <resultMap id="productDtoMap" type="productDto">
+        <id column="product_id" property="productId"/>
+        <result column="category" property="category"/>
+        <result column="product_name" property="productName"/>
+        <result column="price" property="price"/>
+        <result column="size" property="size"/>
+        <result column="color" property="color"/>
+        <result column="inventory_quantity" property="inventoryQuantity"/>
+        <result column="image" property="image"/>
+        <result column="material" property="material"/>
+        <result column="orderable_status" property="orderableStatus2"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="productDtoMap">
+        select
+        *
+        from
+        product_tb
+        order by
+        product_id
+    </select>
+
+    <insert id="insertProduct" useGeneratedKeys="true" keyProperty="productId">
+        insert into
+        product_tb (category, product_name, price, size, color, inventory_quantity, image, material, orderable_status)
+        values(
+        #{category}, #{productName}, #{price}, #{size}, #{color}, #{inventoryQuantity}, #{image}, #{material}, #{orderableStatus2}
+        )
+    </insert>
+
+</mapper>
