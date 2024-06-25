@@ -1,5 +1,6 @@
 package com.sh.shop_kick_n_go.e_charts.controller;
 
+import com.sh.shop_kick_n_go.e_charts.model.dto.GenderDto;
 import com.sh.shop_kick_n_go.e_charts.model.dto.TodayOrderCntDto;
 import com.sh.shop_kick_n_go.e_charts.model.service.ChartQueryService;
 import lombok.RequiredArgsConstructor;
@@ -12,13 +13,20 @@ import java.util.List;
 
 @RestController
 @Slf4j
-@RequestMapping("/api/EChart")
+@RequestMapping("/api/e-chart")
 @RequiredArgsConstructor
 public class ChartRestController {
     private final ChartQueryService ChartQueryService;
 
-    @GetMapping("/charts-data")
+    @GetMapping("/gender")
+    public List<GenderDto> getGenderData() {
+        System.out.println(ChartQueryService.findAllUserGender().get(0).toString());
+        return ChartQueryService.findAllUserGender();
+    }
+
+    @GetMapping("/today-order")
     public List<TodayOrderCntDto> getChartsData() {
         return ChartQueryService.findAllTodayOrderCnt();
     }
+
 }
