@@ -10,5 +10,6 @@ import java.util.List;
 
 @Mapper
 public interface ChartMapper {
+    List<TodayOrderCntDto> findAllOrderCnt();
     List<TodayOrderCntDto> findAllTodayOrderCnt();
 }

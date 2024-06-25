@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<div layout:fragment="content1">
+  <div class="pagetitle">
+    <h1>Chart.js</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
+        <li class="breadcrumb-item">Charts</li>
+        <li class="breadcrumb-item active">Chart.js</li>
+      </ol>
+    </nav>
+  </div><!-- End Page Title -->
+</div>
+
+<p>Chart.JS Examples. You can check the <a href="https://www.chartjs.org/docs/latest/samples/" target="_blank">official website</a> for more examples.</p>
+
+<div layout:fragment="content">
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">매출 그래프</h5>
+            <div class="btn-group mb-3" role="group" aria-label="Sales Data">
+              <button type="button" class="btn btn-primary" id="showDaily">일별</button>
+              <button type="button" class="btn btn-secondary" id="showWeekly">주별</button>
+              <button type="button" class="btn btn-secondary" id="showMonthly">월별</button>
+              <button type="button" class="btn btn-secondary" id="showCustom">특정 기간</button>
+            </div>
+
+            <div id="dateRange" class="mb-3" style="display: none;">
+              <input type="date" id="startDate" class="form-control" placeholder="시작 날짜">
+              <input type="date" id="endDate" class="form-control" placeholder="종료 날짜">
+              <button type="button" class="btn btn-primary mt-2" id="applyDateRange">적용</button>
+            </div>
+
+            <div class="btn-group mb-3" role="group" aria-label="Chart Type">
+              <button type="button" class="btn btn-primary" id="showLineChart">선 그래프</button>
+              <button type="button" class="btn btn-secondary" id="showBarChart">막대 그래프</button>
+            </div>
+
+            <div id="chartContainer">
+              <!-- Charts will be dynamically inserted here -->
+              <canvas id="chartCanvas" style="max-height: 400px;"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    let chartType = 'daily';
+    let dataType = 'totalSales';
+    let chartView = 'line';
+    const chartCanvas = document.getElementById('chartCanvas');
+    let chart;
+
+    const fetchData = (type, startDate, endDate) => {
+      let url = `/api/totalOrders/${type}-sales`;
+      if (type === 'period' && startDate && endDate) {
+        url = `/api/totalOrders/period-sales?startDate=${startDate}&endDate=${endDate}`;
+      }
+      console.log(`Fetching data from URL: ${url}`);
+      return fetch(url)
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error('Network response was not ok');
+                }
+                return response.json();
+              })
+              .then(data => {
+                console.log('Data fetched:', data); // Log all data fetched from the database
+                return data;
+              })
+              .catch(error => {
+                console.error('Error fetching data:', error);
+              });
+    };
+
+    const processChartData = (data) => {
+      const salesData = {};
+
+      data.forEach(order => {
+        const date = new Date(order.orderDate).toISOString().split('T')[0];
+        salesData[date] = (salesData[date] || 0) + order.totalPrice;
+      });
+
+      console.log('Processed chart data:', salesData);
+      return {
+        labels: Object.keys(salesData).sort(),
+        sales: Object.values(salesData)
+      };
+    };
+
+    const createChart = (labels, data, label, unit, type) => {
+      if (chart) chart.destroy();
+      console.log('Creating chart with labels:', labels, 'and data:', data);
+      chart = new Chart(chartCanvas, {
+        type: type,
+        data: {
+          labels: labels,
+          datasets: [{
+            label: label,
+            data: data,
+            fill: false,
+            borderColor: 'rgba(75, 192, 192, 0.2)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            tension: 0.1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                callback: function(value) {
+                  return value + unit;
+                }
+              }
+            }
+          }
+        }
+      });
+    };
+
+    const updateChart = () => {
+      let startDate, endDate;
+      if (chartType === 'custom') {
+        startDate = document.getElementById('startDate').value;
+        endDate = document.getElementById('endDate').value;
+      }
+      fetchData(chartType, startDate, endDate).then(data => {
+        if (!data) return;
+        const chartData = processChartData(data);
+        const labels = chartData.labels;
+        const dataToShow = chartData.sales;
+        const label = chartType === 'custom' ? '특정 기간' : `${chartType === 'daily' ? '일별' : chartType === 'weekly' ? '주별' : '월별'} 총 매출 금액`;
+        const unit = '원';
+
+        createChart(labels, dataToShow, label, unit, chartView);
+      });
+    };
+
+    document.getElementById('showDaily').addEventListener('click', () => {
+      chartType = 'daily';
+      document.getElementById('dateRange').style.display = 'none';
+      updateChart();
+    });
+
+    document.getElementById('showWeekly').addEventListener('click', () => {
+      chartType = 'weekly';
+      document.getElementById('dateRange').style.display = 'none';
+      updateChart();
+    });
+
+    document.getElementById('showMonthly').addEventListener('click', () => {
+      chartType = 'monthly';
+      document.getElementById('dateRange').style.display = 'none';
+      updateChart();
+    });
+
+    document.getElementById('showCustom').addEventListener('click', () => {
+      chartType = 'custom';
+      document.getElementById('dateRange').style.display = 'block';
+    });
+
+    document.getElementById('applyDateRange').addEventListener('click', () => {
+      updateChart();
+    });
+
+    document.getElementById('showLineChart').addEventListener('click', () => {
+      chartView = 'line';
+      updateChart();
+    });
+
+    document.getElementById('showBarChart').addEventListener('click', () => {
+      chartView = 'bar';
+      updateChart();
+    });
+
+    // Initial load
+    updateChart();
+  });
+</script>
+
+</body>
+</html>

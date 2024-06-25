@@ -14,50 +14,41 @@
         <result column="total_price" property="totalPrice"/>
     </resultMap>
 
-    <select id="getTodaySales" resultType="int">
-        SELECT SUM(total_price) FROM order_tb
-        WHERE order_date BETWEEN CURRENT_DATE AND CURRENT_DATE + INTERVAL 1 DAY
-        AND status = '결제 완료'
+    <select id="getTodaySales" resultType="java.lang.Integer">
+        SELECT COALESCE(SUM(total_price), 0)
+        FROM order_tb
+        WHERE order_date = CURRENT_DATE
+        AND status IN ('결제 완료', '배송 준비 중', '배송 중', '배송 완료')
     </select>
 
     <select id="getDailySales" parameterType="map" resultMap="totalOrderDtoMap">
-        SELECT
-        DATE(order_date) as order_date,
-        SUM(total_price) as total_price
+        SELECT *
         FROM order_tb
         WHERE order_date BETWEEN #{startDate} AND #{endDate}
-        AND status = '결제 완료'
-        GROUP BY DATE(order_date)
-        ORDER BY DATE(order_date)
+        AND status IN ('결제 완료', '배송 준비 중', '배송 중', '배송 완료')
+        ORDER BY order_date
     </select>
 
     <select id="getWeeklySales" parameterType="map" resultMap="totalOrderDtoMap">
-        SELECT
-        YEAR(order_date) as year,
-        WEEK(order_date) as week,
-        SUM(total_price) as total_price
+        SELECT *
         FROM order_tb
         WHERE order_date BETWEEN #{startDate} AND #{endDate}
-        AND status = '결제 완료'
-        GROUP BY YEAR(order_date), WEEK(order_date)
+        AND status IN ('결제 완료', '배송 준비 중', '배송 중', '배송 완료')
         ORDER BY YEAR(order_date), WEEK(order_date)
     </select>
 
     <select id="getMonthlySales" parameterType="map" resultMap="totalOrderDtoMap">
-        SELECT
-        YEAR(order_date) as year,
-        MONTH(order_date) as month,
-        SUM(total_price) as total_price
+        SELECT *
         FROM order_tb
         WHERE order_date BETWEEN #{startDate} AND #{endDate}
-        AND status = '결제 완료'
-        GROUP BY YEAR(order_date), MONTH(order_date)
+        AND status IN ('결제 완료', '배송 준비 중', '배송 중', '배송 완료')
         ORDER BY YEAR(order_date), MONTH(order_date)
     </select>
 
     <select id="getPeriodSales" parameterType="map" resultMap="totalOrderDtoMap">
-        SELECT * FROM order_tb
+        SELECT *
+        FROM order_tb
         WHERE order_date BETWEEN #{startDate} AND #{endDate}
-        AND status = '결제 완료'
+        AND status IN ('결제 완료', '배송 준비 중', '배송 중', '배송 완료')
     </select>
 </mapper>

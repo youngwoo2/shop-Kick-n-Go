@@ -9,7 +9,7 @@ import java.util.List;
 
 @Mapper
 public interface TotalOrderMapper {
-    Integer getTodaySales();
+    int getTodaySales();
 
     List<TotalOrderDto> getDailySales(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
