@@ -1,7 +1,7 @@
-package com.sh.shop_kick_n_go.total_order.controller;
+package com.sh.shop_kick_n_go.e_charts.controller;
 
-import com.sh.shop_kick_n_go.total_order.model.dto.TotalOrderDto;
-import com.sh.shop_kick_n_go.total_order.model.service.TotalOrderService;
+import com.sh.shop_kick_n_go.e_charts.model.dto.TotalOrderDto;
+import com.sh.shop_kick_n_go.e_charts.model.service.TotalOrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;

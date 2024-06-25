@@ -1,7 +1,7 @@
-package com.sh.shop_kick_n_go.total_order.model.service;
+package com.sh.shop_kick_n_go.e_charts.model.service;
 
-import com.sh.shop_kick_n_go.total_order.model.dao.TotalOrderMapper;
-import com.sh.shop_kick_n_go.total_order.model.dto.TotalOrderDto;
+import com.sh.shop_kick_n_go.e_charts.model.dao.TotalOrderMapper;
+import com.sh.shop_kick_n_go.e_charts.model.dto.TotalOrderDto;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;

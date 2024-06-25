@@ -1,6 +1,7 @@
 package com.sh.shop_kick_n_go.total_order.model.dao;
 
-import com.sh.shop_kick_n_go.total_order.model.dto.TotalOrderDto;
+import com.sh.shop_kick_n_go.e_charts.model.dao.TotalOrderMapper;
+import com.sh.shop_kick_n_go.e_charts.model.dto.TotalOrderDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
