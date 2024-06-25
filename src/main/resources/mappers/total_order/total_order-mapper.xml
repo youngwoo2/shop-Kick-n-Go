@@ -17,7 +17,7 @@
     <select id="getTodaySales" resultType="java.lang.Integer">
         SELECT COALESCE(SUM(total_price), 0)
         FROM order_tb
-        WHERE order_date = CURRENT_DATE
+        WHERE date(order_date) = CURRENT_DATE
         AND status IN ('결제 완료', '배송 준비 중', '배송 중', '배송 완료')
     </select>
 
