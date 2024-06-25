@@ -13,4 +13,7 @@ public class EChartController {
     @GetMapping("/charts-apexcharts")
     public void charts(Model model) {
     }
+    @GetMapping("/charts-chartjs")
+    public void getCharts(Model model) {
+    }
 }
