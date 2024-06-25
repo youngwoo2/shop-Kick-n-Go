@@ -17,21 +17,22 @@ import java.util.List;
 @RequestMapping("/api/e-chart")
 @RequiredArgsConstructor
 public class ChartRestController {
-    private final ChartQueryService ChartQueryService;
+    private final ChartQueryService chartQueryService;
 
     @GetMapping("/gender")
     public List<GenderDto> getGenderData() {
-        return ChartQueryService.findAllUserGender();
+        return chartQueryService.findAllUserGender();
     }
 
     @GetMapping("/today-order")
     public List<TodayOrderCntDto> getChartsData() {
-        return ChartQueryService.findAllTodayOrderCnt();
+        return chartQueryService.findAllTodayOrderCnt();
     }
 
-    @GetMapping("/age")
+    @GetMapping("/age-gender")
     public List<AgeDto> getAgeData() {
-        return ChartQueryService.findAllUserAge();
+        System.out.println("afafa"+chartQueryService.findAllUserAge().get(0).toString());
+        return chartQueryService.findAllUserAge();
     }
 
 }

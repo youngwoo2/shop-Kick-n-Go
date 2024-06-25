@@ -11,6 +11,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class AgeDto {
     private int userId;
-    private int gender;
-    private String userAge;
+    private String gender;
+    private int userAge;
 }

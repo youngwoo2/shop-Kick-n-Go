@@ -26,7 +26,8 @@
     <select id="findAllUserAge" resultMap="ageDtoMap">
         SELECT
         user_id,
-        gender
+        gender,
+        user_age
         FROM
         user_tb
     </select>
