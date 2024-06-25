@@ -28,7 +28,14 @@ public class OrderController {
 
     @GetMapping("/delivery-tables-data")
     public void deliveryList(Model model) {
-        List<DeliveryDto> deliveries = orderQueryService.findAllDelivery();
+        List<OrderDto> deliveries = orderQueryService.findAllDelivery();
         model.addAttribute("deliveries", deliveries);
     }
+
+    @GetMapping("/cancel-tables-data")
+    public void cancelOrderList(Model model) {
+        List<OrderDto> cancelOrders = orderQueryService.findAllCancelOrder();
+        model.addAttribute("cancelOrders", cancelOrders);
+    }
+
 }
