@@ -30,7 +30,6 @@ public class ProductController {
         log.info("GET /product/list");
         List<ProductDto> products = productQueryService.findAll();
         model.addAttribute("products", products);
-
     }
 
     @PostMapping("/product-tables-data")

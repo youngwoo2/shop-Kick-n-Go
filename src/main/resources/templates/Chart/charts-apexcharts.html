@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+</head>
+
+<body>
+  <div layout:fragment="content1">
+    <div class="pagetitle">
+      <h1>ApexCharts</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
+          <li class="breadcrumb-item">Charts</li>
+          <li class="breadcrumb-item active">ApexCharts</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+  </div>
+    <p>ApexCharts Examples. You can check the <a href="https://apexcharts.com/javascript-chart-demos/" target="_blank">official website</a> for more examples.</p>
+  <div layout:fragment="content">
+    <section class="section">
+      <div class="row">
+
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">오늘의 주문 수</h5>
+              <!-- Line Chart -->
+              <div id="lineChart"></div>
+              <script>
+                document.addEventListener("DOMContentLoaded", () => {
+                  fetch('http://localhost:8080/app/api/e-chart/today-order')
+                          .then(response => {
+                            if (!response.ok) {
+                              throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                          })
+                          .then(data => {
+                            console.log("Order Data:", data);
+
+                            // 날짜별 주문 수 계산
+                            const orderCountByDate = data.reduce((acc, order) => {
+                              const date = new Date(order.orderDate).toISOString().split('T')[0]; // 'YYYY-MM-DD' 형식
+                              acc[date] = (acc[date] || 0) + 1;
+                              return acc;
+                            }, {});
+
+                            console.log("Order Count By Date:", orderCountByDate);
+
+                            // 날짜와 주문 수 배열 생성
+                            const dates = Object.keys(orderCountByDate);
+                            const counts = Object.values(orderCountByDate);
+
+                            console.log("Dates:", dates);
+                            console.log("Counts:", counts);
+
+                            new ApexCharts(document.querySelector("#lineChart"), {
+                              series: [{
+                                name: "Orders",
+                                data: counts
+                              }],
+                              chart: {
+                                height: 350,
+                                type: 'line',
+                                zoom: {
+                                  enabled: false
+                                }
+                              },
+                              dataLabels: {
+                                enabled: false
+                              },
+                              stroke: {
+                                curve: 'straight'
+                              },
+                              grid: {
+                                row: {
+                                  colors: ['#f3f3f3', 'transparent'],
+                                  opacity: 0.5
+                                },
+                              },
+                              xaxis: {
+                                categories: dates,
+                                labels: {
+                                  rotate: -45
+                                }
+                              },
+                              yaxis: {
+                                title: {
+                                  text: ''
+                                }
+                              },
+                              tooltip: {
+                                x: {
+                                  format: 'dd MMM'
+                                }
+                              }
+                            }).render();
+                          })
+                          .catch(error => console.error('Error fetching data:', error));
+                });
+              </script>
+            </div>
+              <!-- End Line Chart -->
+
+            </div>
+          </div>
+
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">성별 비율</h5>
+            <!-- Pie Chart -->
+            <div id="genderPieChart"></div>
+            <script>
+              document.addEventListener("DOMContentLoaded", () => {
+                fetch('http://localhost:8080/app/api/e-chart/gender')
+                        .then(response => {
+                          if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                          }
+                          return response.json();
+                        })
+                        .then(data => {
+                          console.log("Gender Data:", data);
+
+                          // 성별 비율 계산
+                          const genderCounts = data.reduce((acc, user) => {
+                            acc[user.gender] = (acc[user.gender] || 0) + 1;
+                            return acc;
+                          }, {});
+
+                          const genders = Object.keys(genderCounts);
+                          const counts = Object.values(genderCounts);
+
+                          console.log("Genders:", genders);
+                          console.log("Counts:", counts);
+
+                          new ApexCharts(document.querySelector("#genderPieChart"), {
+                            series: counts,
+                            chart: {
+                              height: 350,
+                              type: 'pie',
+                            },
+                            labels: genders,
+                            responsive: [{
+                              breakpoint: 350,
+                              options: {
+                                chart: {
+                                  width: 200
+                                },
+                                legend: {
+                                  position: 'bottom'
+                                }
+                              }
+                            }]
+                          }).render();
+                        })
+                        .catch(error => console.error('Error fetching data:', error));
+              });
+            </script>
+          </div>
+          <!-- End Pie Chart -->
+        </div>
+      </div>
+      </div>
+    </section>
+</div>
+
+
+</body>
+
+</html>

@@ -8,7 +8,7 @@
         <result column="order_date" property="orderDate"/>
     </resultMap>
 
-    <select id="findAllTodayOrderCnt" resultMap="todayOrderCntDtoMap">
+    <select id="findAllOrderCnt" resultMap="todayOrderCntDtoMap">
         select
         *
         from
@@ -18,5 +18,20 @@
         order by
         order_date
     </select>
+
+    <select id="findAllTodayOrderCnt" resultMap="todayOrderCntDtoMap">
+        select
+        *
+        from
+        order_tb
+        where
+        status IN ('결제 완료', '배송 준비중', '배송중', '배송 완료')
+        and
+        date(order_date) = current_date
+        order by
+        order_date
+    </select>
+
+
 
 </mapper>
