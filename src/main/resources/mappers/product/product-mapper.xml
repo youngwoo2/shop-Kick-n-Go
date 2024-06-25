@@ -35,8 +35,15 @@
 
     <update id="updateProduct">
         update product_tb
-        set #{productId}
+        set category = #{category},
+            product_name = #{productName},
+            price = #{price},
+            size = #{size},
+            color = #{color},
+            inventory_quantity = #{inventoryQuantity},
+            image = #{image},
+            material = #{material},
+            orderable_status = #{orderableStatus2}
+        where product_id = #{productId}
     </update>
-
-
 </mapper>

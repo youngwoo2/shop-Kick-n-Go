@@ -7,52 +7,24 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/member")
+@RequestMapping("")
 public class MemberController {
 
-    private final MemberService service;
+    @Autowired
+    private MemberService memberService;
 
-    @GetMapping("/login")
-    public String loginForm(Model model, HttpSession session, HttpServletRequest httpServletRequest) {
-        httpServletRequest.getParameter("name");
-        MemberDto memberDto = (MemberDto) session.getAttribute("user");
-        model.addAttribute("name", memberDto.getUserName());
-
-
-        return "member/login";
-
-    }
-
-
-    @PostMapping("/login")
-    public String login(@RequestParam("email") String userEmail, String userPassword, HttpSession session, RedirectAttributes redirectAttributes) {
-
-        MemberDto loginMember = service.login(userEmail, userPassword);
-        if (loginMember == null) {
-            redirectAttributes.addFlashAttribute("loginFail", "아이디가 잘못 입력되었습니다 ");
-            return "redirect:/";
-        }
-        session.setAttribute("user", loginMember);
-
-        return "redirect:/member/login";
-
-    }
-
-    @PostMapping("/logout")
-    public String logout(HttpSession session) {
-        session.invalidate();
-        log.info("로그아웃");
-        return "redirect:/member/logout";
-    }
-
-
+//    List<MemberDto> memberDto = memberService.findAllUser();
 }
+
 

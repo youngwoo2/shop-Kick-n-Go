@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 
 @Data
@@ -18,4 +19,6 @@ public class OrderDto {
     private Timestamp orderDate;
     private String status;
     private int totalPrice;
+
+    private List<OrderItemDto> orderItemList;
 }

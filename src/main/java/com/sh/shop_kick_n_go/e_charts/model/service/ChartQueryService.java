@@ -2,6 +2,7 @@ package com.sh.shop_kick_n_go.e_charts.model.service;
 
 import com.sh.shop_kick_n_go.e_charts.model.dao.ChartMapper;
 import com.sh.shop_kick_n_go.e_charts.model.dao.UserMapper;
+import com.sh.shop_kick_n_go.e_charts.model.dto.AgeDto;
 import com.sh.shop_kick_n_go.e_charts.model.dto.GenderDto;
 import com.sh.shop_kick_n_go.e_charts.model.dto.TodayOrderCntDto;
 import com.sh.shop_kick_n_go.menu.model.dao.MenuMapper;
@@ -28,5 +29,8 @@ public class ChartQueryService {
     }
     public List<GenderDto> findAllUserGender() {
         return userMapper.findAllUserGender();
+    }
+    public List<AgeDto> findAllUserAge() {
+        return userMapper.findAllUserAge();
     }
 }

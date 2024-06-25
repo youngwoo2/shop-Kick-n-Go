@@ -1,5 +1,6 @@
 package com.sh.shop_kick_n_go.order.model.dao;
 
+import com.sh.shop_kick_n_go.order.model.dto.CancelOrderDto;
 import com.sh.shop_kick_n_go.order.model.dto.DeliveryDto;
 import com.sh.shop_kick_n_go.order.model.dto.OrderDto;
 import org.junit.jupiter.api.DisplayName;
@@ -35,11 +36,11 @@ class OrderMapperTest {
     }
 
     @Test
-    @DisplayName("배송")
+    @DisplayName("배송조회")
     void test2() {
         // given
         // when
-        List<DeliveryDto> deliveries = orderMapper.findAllDelivery();
+        List<OrderDto> deliveries = orderMapper.findAllDelivery();
         System.out.println(deliveries);
         // then
         assertThat(deliveries)
@@ -47,4 +48,22 @@ class OrderMapperTest {
                 .isNotEmpty()
                 .allMatch((d) -> d != null);
     }
+
+
+
+
+    @Test
+    @DisplayName("취소주문 조회")
+    void test3() {
+        // given
+        // when
+        List<OrderDto> cancelOrders = orderMapper.findAllCancelOrder();
+        System.out.println(cancelOrders);
+        // then
+        assertThat(cancelOrders)
+                .isNotEmpty()
+                .isNotNull()
+                .allMatch((c) -> c != null);
+    }
+
 }

@@ -15,4 +15,21 @@
         FROM
         user_tb
     </select>
+
+
+    <resultMap id="ageDtoMap" type="ageDto">
+        <id property="userId" column="user_id" />
+        <result property="gender" column="gender" />
+        <result property="userAge" column="user_age" />
+    </resultMap>
+    <!-- 유저 성별 정보를 얻어오는 쿼리 -->
+    <select id="findAllUserAge" resultMap="ageDtoMap">
+        SELECT
+        user_id,
+        gender,
+        user_age
+        FROM
+        user_tb
+    </select>
+
 </mapper>

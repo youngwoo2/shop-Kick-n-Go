@@ -1,5 +1,6 @@
 package com.sh.shop_kick_n_go.e_charts.controller;
 
+import com.sh.shop_kick_n_go.e_charts.model.dto.AgeDto;
 import com.sh.shop_kick_n_go.e_charts.model.dto.GenderDto;
 import com.sh.shop_kick_n_go.e_charts.model.dto.TodayOrderCntDto;
 import com.sh.shop_kick_n_go.e_charts.model.service.ChartQueryService;
@@ -16,17 +17,22 @@ import java.util.List;
 @RequestMapping("/api/e-chart")
 @RequiredArgsConstructor
 public class ChartRestController {
-    private final ChartQueryService ChartQueryService;
+    private final ChartQueryService chartQueryService;
 
     @GetMapping("/gender")
     public List<GenderDto> getGenderData() {
-        System.out.println(ChartQueryService.findAllUserGender().get(0).toString());
-        return ChartQueryService.findAllUserGender();
+        return chartQueryService.findAllUserGender();
     }
 
     @GetMapping("/today-order")
     public List<TodayOrderCntDto> getChartsData() {
-        return ChartQueryService.findAllTodayOrderCnt();
+        return chartQueryService.findAllTodayOrderCnt();
+    }
+
+    @GetMapping("/age-gender")
+    public List<AgeDto> getAgeData() {
+        System.out.println("afafa"+chartQueryService.findAllUserAge().get(0).toString());
+        return chartQueryService.findAllUserAge();
     }
 
 }
