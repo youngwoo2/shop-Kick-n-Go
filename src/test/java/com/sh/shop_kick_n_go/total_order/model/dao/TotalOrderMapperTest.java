@@ -74,6 +74,7 @@ class TotalOrderMapperTest {
 
         // then
         int totalSales = weeklySales.stream().mapToInt(TotalOrderDto::getTotalPrice).sum();
+
         assertThat(totalSales).isPositive();
         assertThat(weeklySales)
                 .isNotNull()
