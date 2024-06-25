@@ -16,7 +16,9 @@ import java.util.List;
 
 @Controller
 @Slf4j
+
 @RequestMapping(value = "/")
+
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductQueryService productQueryService;
@@ -28,6 +30,7 @@ public class ProductController {
         log.info("GET /product/list");
         List<ProductDto> products = productQueryService.findAll();
         model.addAttribute("products", products);
+
     }
 
     @PostMapping("/product-tables-data")
