@@ -16,4 +16,5 @@ public class CancelOrderDto {
     private String cancellationStatus;
     private Timestamp cancellationRequestDate;
     private String cancellationReason;
+    private OrderDto orderDto;
 }
