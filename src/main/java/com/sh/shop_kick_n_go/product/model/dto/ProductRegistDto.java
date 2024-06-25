@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductRegistDto {
-    private OrderableStatus2 orderableStatus2;
 
     private Category category;
     private String productName;
@@ -18,8 +17,9 @@ public class ProductRegistDto {
     private int inventoryQuantity;
     private String image;
     private Material material;
+    private OrderableStatus2 orderableStatus2;
 
     public ProductDto toProductDto() {
-        return new ProductDto(10, this.category, this.productName, this.price, this.size, this.color, this.inventoryQuantity, this.image, this.material, orderableStatus2.판매중);
+        return new ProductDto(20, this.category, this.productName, this.price, this.size, this.color, this.inventoryQuantity, this.image, this.material, orderableStatus2.판매중);
     }
 }

@@ -50,10 +50,10 @@
             <div class="card mb-3">
 
               <div class="card-body">
-
                 <div class="pt-4 pb-2">
                   <h5 class="card-title text-center pb-0 fs-4">관리자 로그인</h5>
                   <p class="text-center small">Enter your ID & password to login</p>
+
                 </div>
 
                 <form class="row g-3 needs-validation" th:action="@{/login}" method="post" novalidate>
@@ -86,7 +86,6 @@
             <div class="credits">
               Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
             </div>
-
           </div>
         </div>
       </div>
@@ -104,6 +103,20 @@
 <!-- Template Main JS File -->
 <script src="assets/js/main.js"></script>
 
+
+  <!-- Vendor JS Files -->
+  <script th:src="@{/assets/vendor/apexcharts/apexcharts.min.js}"></script>
+  <script th:src="@{/assets/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+  <script th:src="@{/assets/vendor/chart.js/chart.umd.js}"></script>
+  <script th:src="@{/assets/vendor/echarts/echarts.min.js}"></script>
+  <script th:src="@{/assets/vendor/quill/quill.js}"></script>
+  <script th:src="@{/assets/vendor/simple-datatables/simple-datatables.js}"></script>
+  <script th:src="@{/assets/vendor/tinymce/tinymce.min.js}"></script>
+  <script th:src="@{/assets/vendor/php-email-form/validate.js}"></script>
+
+  <!-- Template Main JS File -->
+  <script th:src="@{/assets/js/main.js}"></script>
+
 <!-- Login Fail Alert -->
 <div id="login-fail-message" th:data-login-fail="${loginFail != null ? loginFail : ''}" style="display:none;"></div>
 <script>
@@ -114,6 +127,7 @@
     alert(loginFailMessage);
   }
 </script>
+
 
 </body>
 </html>

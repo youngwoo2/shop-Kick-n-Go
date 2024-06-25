@@ -272,6 +272,12 @@ h6 {
 }
 
 /* Accordion */
+.btn-secondary {
+  border: 0;
+  color: #f6f9ff;
+  background-color: #4154f1;
+}
+
 .accordion-item {
   border: 1px solid #ebeef4;
 }
