@@ -5,6 +5,7 @@
 
 <head>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -63,9 +64,13 @@
       let chart; // 전역 변수로 차트 선언
 
       function renderChart(type, labels, data) {
-        const container = document.getElementById('chartContainer');
-        container.innerHTML = '<canvas id="chartCanvas" style="max-height: 400px;"></canvas>'; // 기존 캔버스를 새 캔버스로 교체
-        const ctx = document.getElementById('chartCanvas').getContext('2d');
+        const container = $('#chartContainer');
+        container.html('<canvas id="chartCanvas" style="max-height: 400px;"></canvas>'); // 기존 캔버스를 새 캔버스로 교체
+        const ctx = $('#chartCanvas')[0].getContext('2d');
+
+        if (chart) {
+          chart.destroy();
+        }
 
         chart = new Chart(ctx, {
           type: type,
@@ -89,68 +94,95 @@
         });
       }
 
-      document.getElementById('showDaily').addEventListener('click', function() {
-        fetch('http://localhost:8080/app/api/totalOrders/daily-sales')
-                .then(response => response.json())
-                .then(data => {
-                  const labels = data.map(item => item.orderDate);
-                  const salesData = data.map(item => item.totalPrice);
-                  renderChart('line', labels, salesData);
-                })
-                .catch(error => console.error('Error fetching data:', error));
+      $('#showDaily').click(function() {
+        $.ajax({
+          url: 'http://localhost:8080/app/api/totalOrders/daily-sales',
+          method: 'GET',
+          dataType: 'json',
+          success: function(data) {
+            console.log(data); // 데이터 구조 확인을 위한 로그
+            const labels = data.map(item => item.orderDate);
+            const salesData = data.map(item => item.totalPrice);
+            renderChart('line', labels, salesData);
+          },
+          error: function(error) {
+            console.error('Error fetching data:', error);
+          }
+        });
       });
 
-      document.getElementById('showWeekly').addEventListener('click', function() {
-        fetch('http://localhost:8080/app/api/totalOrders/weekly-sales')
-                .then(response => response.json())
-                .then(data => {
-                  const labels = data.map(item => item.orderDate);
-                  const salesData = data.map(item => item.totalPrice);
-                  renderChart('line', labels, salesData);
-                })
-                .catch(error => console.error('Error fetching data:', error));
+      $('#showWeekly').click(function() {
+        $.ajax({
+          url: 'http://localhost:8080/app/api/totalOrders/weekly-sales',
+          method: 'GET',
+          dataType: 'json',
+          success: function(data) {
+            console.log(data); // 데이터 구조 확인을 위한 로그
+            const labels = data.map(item => item.orderDate);
+            const salesData = data.map(item => item.totalPrice);
+            renderChart('line', labels, salesData);
+          },
+          error: function(error) {
+            console.error('Error fetching data:', error);
+          }
+        });
       });
 
-      document.getElementById('showMonthly').addEventListener('click', function() {
-        fetch('http://localhost:8080/app/api/totalOrders/monthly-sales')
-                .then(response => response.json())
-                .then(data => {
-                  const labels = data.map(item => item.orderDate);
-                  const salesData = data.map(item => item.totalPrice);
-                  renderChart('line', labels, salesData);
-                })
-                .catch(error => console.error('Error fetching data:', error));
+      $('#showMonthly').click(function() {
+        $.ajax({
+          url: 'http://localhost:8080/app/api/totalOrders/monthly-sales',
+          method: 'GET',
+          dataType: 'json',
+          success: function(data) {
+            console.log(data); // 데이터 구조 확인을 위한 로그
+            const labels = data.map(item => item.orderDate);
+            const salesData = data.map(item => item.totalPrice);
+            renderChart('line', labels, salesData);
+          },
+          error: function(error) {
+            console.error('Error fetching data:', error);
+          }
+        });
       });
 
-      document.getElementById('showCustom').addEventListener('click', function() {
-        document.getElementById('dateRange').style.display = 'block';
+      $('#showCustom').click(function() {
+        $('#dateRange').show();
       });
 
-      document.getElementById('applyDateRange').addEventListener('click', function() {
-        const startDate = document.getElementById('startDate').value;
-        const endDate = document.getElementById('endDate').value;
+      $('#applyDateRange').click(function() {
+        const startDate = $('#startDate').val();
+        const endDate = $('#endDate').val();
 
-        fetch(`http://localhost:8080/app/api/totalOrders/period-sales?startDate=${startDate}&endDate=${endDate}`)
-                .then(response => response.json())
-                .then(data => {
-                  const labels = data.map(item => item.orderDate);
-                  const salesData = data.map(item => item.totalPrice);
-                  renderChart('line', labels, salesData);
-                })
-                .catch(error => console.error('Error fetching data:', error));
+        $.ajax({
+          url: `http://localhost:8080/app/api/totalOrders/period-sales`,
+          method: 'GET',
+          data: {
+            startDate: startDate,
+            endDate: endDate
+          },
+          dataType: 'json',
+          success: function(data) {
+            console.log(data); // 데이터 구조 확인을 위한 로그
+            const labels = data.map(item => item.orderDate);
+            const salesData = data.map(item => item.totalPrice);
+            renderChart('line', labels, salesData);
+          },
+          error: function(error) {
+            console.error('Error fetching data:', error);
+          }
+        });
       });
 
-      document.getElementById('showLineChart').addEventListener('click', function() {
+      $('#showLineChart').click(function() {
         // 데이터를 가져와서 'line' 타입의 차트를 렌더링
         // 여기에 필요한 데이터를 fetch 해서 가져오고 renderChart 함수를 호출하는 로직을 추가하세요
       });
 
-      document.getElementById('showBarChart').addEventListener('click', function() {
+      $('#showBarChart').click(function() {
         // 데이터를 가져와서 'bar' 타입의 차트를 렌더링
         // 여기에 필요한 데이터를 fetch 해서 가져오고 renderChart 함수를 호출하는 로직을 추가하세요
       });
     </script>
-
 
   </section>
 
