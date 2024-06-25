@@ -29,7 +29,6 @@ public class ProductController {
         log.info("GET /product/search");
         List<ProductDto> products = productQueryService.findAll();
         model.addAttribute("products", products);
-
     }
 
     @PostMapping("/product-regist")
