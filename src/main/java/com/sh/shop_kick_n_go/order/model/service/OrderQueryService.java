@@ -16,7 +16,11 @@ public class OrderQueryService {
         return orderMapper.findAllOrder();
     }
 
-    public List<DeliveryDto> findAllDelivery() {
+    public List<OrderDto> findAllDelivery() {
         return orderMapper.findAllDelivery();
+    }
+
+    public List<OrderDto> findAllCancelOrder() {
+        return orderMapper.findAllCancelOrder();
     }
 }

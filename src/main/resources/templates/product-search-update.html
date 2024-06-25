@@ -1,54 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-  <title>Tables / Data - NiceAdmin Bootstrap Template</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-
-  <!-- Favicons -->
-   <link th:href="@{/assets/img/favicon.png}" rel="icon" />
-  <link th:href="@{/assets/img/apple-touch-icon.png}" rel="apple-touch-icon" />
-
-
-
-
-
-  
-
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.gstatic.com" rel="preconnect" />
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet" />
-
-  <!-- Vendor CSS Files -->
-  <link th:href="@{/assets/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
-  <link th:href="@{/assets/vendor/bootstrap-icons/bootstrap-icons.css}" rel="stylesheet" />
-  <link th:href="@{/assets/vendor/boxicons/css/boxicons.min.css}" rel="stylesheet" />
-  <link th:href="@{/assets/vendor/quill/quill.snow.css}" rel="stylesheet" />
-  <link th:href="@{/assets/vendor/quill/quill.bubble.css}" rel="stylesheet" />
-  <link th:href="@{/assets/vendor/remixicon/remixicon.css}" rel="stylesheet" />
-  <link th:href="@{/assets/vendor/simple-datatables/style.css}" rel="stylesheet" />
-
-  <!-- Template Main CSS File -->
-  <link th:href="@{/assets/css/style.css}" rel="stylesheet" />
-
-  <!-- =======================================================
-  * Template Name: NiceAdmin
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Updated: Apr 20 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
 
 <body>
-
-  <main id="main" class="main">
-
+    <div layout:fragment="content1">
     <div class="pagetitle">
       <h1>상품조회/수정</h1>
       <nav>
@@ -58,8 +14,10 @@
           <li class="breadcrumb-item active">상품조회/수정</li>
         </ol>
       </nav>
+    </div>
     </div><!-- End Page Title -->
 
+    <div layout:fragment="content">
     <section class="section">
       <div class="row">
         <div class="col-lg-12">
@@ -99,16 +57,20 @@
                       <td th:text="*{productId}"></td>
                       <td onclick="makeEditable(this)" th:text="*{category}"></td>
                       <td onclick="makeEditable(this)" th:text="*{productName}"></td>
-                      <td onclick="makeEditable(this)" type="number" th:text="*{price.formatInteger(menuPrice, 3, 'COMMA')}"></td>
+                      <td onclick="makeEditable(this)" type="number" th:text="*{price}"></td>
                       <td onclick="makeEditable(this)" type="number" th:text="*{size}"></td>
                       <td onclick="makeEditable(this)" th:text="*{color}"></td>
                       <td onclick="makeEditable(this)" type="number" th:text="*{inventoryQuantity}"></td>
-                      <td><input type="file" multiple th:text="*{image}"></td>
+                      <td><input type="file" id="imageInput" multiple th:text="*{image}"></td>
                       <td onclick="makeEditable(this)" th:text="*{material}"></td>
                       <td onclick="makeEditable(this)" th:text="*{orderableStatus2}"></td>
                     </tr>
                   </tbody>
                 </table>
+                    <div class="button-wrapper my-3">
+                        <button class="btn btn-secondary" type="button" onclick="saveToDatabase()">수정</button>
+                        <button class="btn btn-secondary" type="button" id="delBtn" onclick="deleteSelected()">삭제</button>
+                    </div>
                 </form>
               </div>
               <!-- End Table with stripped rows -->
@@ -239,10 +201,7 @@
 <!--                </div>-->
 <!--              </div>&lt;!&ndash; 수정 버튼 끝&ndash;&gt;-->
 
-              <div class="button-wrapper my-3">
-                <button class="btn btn-secondary" type="submit" onclick="saveToDatabase()">수정</button>
-                <button class="btn btn-secondary" type="submit" id="delBtn" onclick="deleteSelected()">삭제</button>
-              </div>
+
 
               <!-- 수정 버튼 -->
 <!--              <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">-->
@@ -298,7 +257,8 @@
       </div>
     </section>
 
-  </main><!-- End #main -->
+
+  <!-- End #main -->
 
 <!--  전체선택/해제 버튼 -->
 <!--  <script th:inline="javascript">-->
@@ -319,7 +279,16 @@
   <script>
     function makeEditable(element) {
 
-      // 현재 셀의 텍스트를 저장
+        // 체크박스 처리
+        const $thisCheck = element.closest('tr').querySelector("[name=checkboxEach]");
+        const $checks = document.querySelectorAll("[name=checkboxEach]");
+        console.log($thisCheck, $checks);
+        [...$checks].forEach(($check) => {
+            $check.checked = false;
+            $check === $thisCheck && ($check.checked = true);
+        });
+
+        // 현재 셀의 텍스트를 저장
       var currentText = element.innerText;
 
       // 이미 인풋 박스가 생성되어 있는지 확인
@@ -374,29 +343,38 @@
       // 다른 필요한 로직 처리
     }
 
-    function saveToDatabase(element) {
+    function saveToDatabase() {
+      // 수정된 데이터 가져오기 (수정한 tr의 checkbox는 체크처리 되어 있을 것이다.)
+      const element = document.querySelector("[name=checkboxEach]:checked");
+
       // 서버로 데이터를 전송
       var row = element.closest('tr'); // 현재 행(tr)을 찾음
-      var data = {
-        productId: row.querySelector('td:nth-child(1)').innerText, // 상품코드
-        category: row.querySelector('td:nth-child(2)').innerText, // 카테고리
-        productName: row.querySelector('td:nth-child(3)').innerText, // 상품명
-        price: row.querySelector('td:nth-child(4)').innerText, // 판매가
-        size: row.querySelector('td:nth-child(5)').innerText, // 사이즈
-        color: row.querySelector('td:nth-child(6)').innerText, // 컬러
-        inventoryQuantity: row.querySelector('td:nth-child(7)').innerText, // 재고수량
-        material: row.querySelector('td:nth-child(9)').innerText, // 소재
-        orderableStatus2: row.querySelector('td:nth-child(10)').innerText // 판매상태
+      var fileInput = row.querySelector('#imageInput'); // 파일 input 요소 찾기
+      var image = fileInput.files.length > 0 ? fileInput.file[0].name : '#imageInput'.toString(); // 업로드한 파일이름 가져오기
+      var productDto = {
+        productId: row.querySelector('td:nth-child(2)').innerText, // 상품코드
+        category: row.querySelector('td:nth-child(3)').innerText, // 카테고리
+        productName: row.querySelector('td:nth-child(4)').innerText, // 상품명
+        price: row.querySelector('td:nth-child(5)').innerText, // 판매가
+        size: row.querySelector('td:nth-child(6)').innerText, // 사이즈
+        color: row.querySelector('td:nth-child(7)').innerText, // 컬러
+        inventoryQuantity: row.querySelector('td:nth-child(8)').innerText, // 재고수량
+        image: image, // 이미지(파일이름)
+        material: row.querySelector('td:nth-child(10)').innerText, // 소재
+        orderableStatus2: row.querySelector('td:nth-child(11)').innerText // 판매상태
         // 이미지 데이터는 서버에서 따로 처리해야 함 (파일 업로드 등)
       };
 
+      console.log(productDto);
+
+
       // fetch API를 사용하여 서버에 데이터 전송
-      fetch('/app/product-tables-data', {
+      fetch('/app/product-search-update', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(productDto)
       })
               .then(response => {
                 if (response.ok) {
@@ -434,7 +412,7 @@
       });
 
       // 선택된 상품 코드들을 서버로 전송하여 삭제 요청
-      fetch('/product-tables-data', {
+      fetch('/app/product-tables-data', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -458,7 +436,7 @@
               });
     }
   </script>
-
+  </div>
 </body>
 
 </html>

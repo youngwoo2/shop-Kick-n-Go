@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sh.shop_kick_n_go.member.model.dao.MemberMapper">
+
+
+    <select id="findAllUser" resultType="MemberDto">
+        select *
+        from user_tb
+    </select>
+
+    <select id="findByUserGrade" resultType="MemberDto">
+        select *
+        from user_tb
+        where user_grade = #{userGrade}
+    </select>
+    <select id="findByAddressCode" resultType="MemberDto">
+        select *
+        from user_tb
+        where address_code = #{userAddressCode}
+    </select>
+
+    <select id="findByUserId" resultType="MemberDto">
+        select *
+        from user_tb
+        where user_id = #{userId}
+    </select>
+
+    <delete id="deleteUserInfoByStatus">
+        delete
+        from user_tb
+        where withdrawal_status = #{withdrawalStatus} and user_id = #{userId}
+    </delete>
+</mapper>
