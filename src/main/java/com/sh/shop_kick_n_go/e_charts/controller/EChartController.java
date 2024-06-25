@@ -12,6 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class EChartController {
     @GetMapping("/charts")
     public String charts(Model model) {
-        return "charts-apexcharts";
+        return "thymeleaf/charts-apexcharts";
     }
 }

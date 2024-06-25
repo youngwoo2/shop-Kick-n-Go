@@ -22,12 +22,12 @@ public class ProductController {
     private final ProductCommandService productCommandService;
 
 //    @RequestMapping(value = "/NiceAdmin/tables-data", method = RequestMethod.GET)
-    @GetMapping("/tables-data")
-    public String list(Model model){
+    @GetMapping("/list")
+    public void list(Model model){
         log.info("GET /product/list");
         List<ProductDto> products = productQueryService.findAll();
         model.addAttribute("products", products);
-        return "product-tables-data";
+//        return "product-tables-data";
     }
 
 //    @RequestMapping(value = "/NiceAdmin/forms-elements", method = RequestMethod.POST)
