@@ -1,4 +1,4 @@
-package com.sh.shop_kick_n_go.total_order.model.dto;
+package com.sh.shop_kick_n_go.e_charts.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
