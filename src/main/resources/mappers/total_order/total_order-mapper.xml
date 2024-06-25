@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sh.shop_kick_n_go.total_order.model.dao.TotalOrderMapper">
+
+    <resultMap id="totalOrderDtoMap" type="com.sh.shop_kick_n_go.total_order.model.dto.TotalOrderDto">
+        <id column="order_id" property="orderId"/>
+        <result column="user_id" property="userId"/>
+        <result column="orderer_name" property="ordererName"/>
+        <result column="orderer_address" property="ordererAddress"/>
+        <result column="order_date" property="orderDate"/>
+        <result column="status" property="status"/>
+        <result column="total_price" property="totalPrice"/>
+    </resultMap>
+
+    <select id="getTodaySales" resultType="int">
+        SELECT SUM(total_price) FROM order_tb
+        WHERE order_date BETWEEN CURRENT_DATE AND CURRENT_DATE + INTERVAL 1 DAY
+        AND status = '결제 완료'
+    </select>
+
+    <select id="getDailySales" parameterType="map" resultMap="totalOrderDtoMap">
+        SELECT
+        DATE(order_date) as order_date,
+        SUM(total_price) as total_price
+        FROM order_tb
+        WHERE order_date BETWEEN #{startDate} AND #{endDate}
+        AND status = '결제 완료'
+        GROUP BY DATE(order_date)
+        ORDER BY DATE(order_date)
+    </select>
+
+    <select id="getWeeklySales" parameterType="map" resultMap="totalOrderDtoMap">
+        SELECT
+        YEAR(order_date) as year,
+        WEEK(order_date) as week,
+        SUM(total_price) as total_price
+        FROM order_tb
+        WHERE order_date BETWEEN #{startDate} AND #{endDate}
+        AND status = '결제 완료'
+        GROUP BY YEAR(order_date), WEEK(order_date)
+        ORDER BY YEAR(order_date), WEEK(order_date)
+    </select>
+
+    <select id="getMonthlySales" parameterType="map" resultMap="totalOrderDtoMap">
+        SELECT
+        YEAR(order_date) as year,
+        MONTH(order_date) as month,
+        SUM(total_price) as total_price
+        FROM order_tb
+        WHERE order_date BETWEEN #{startDate} AND #{endDate}
+        AND status = '결제 완료'
+        GROUP BY YEAR(order_date), MONTH(order_date)
+        ORDER BY YEAR(order_date), MONTH(order_date)
+    </select>
+
+    <select id="getPeriodSales" parameterType="map" resultMap="totalOrderDtoMap">
+        SELECT * FROM order_tb
+        WHERE order_date BETWEEN #{startDate} AND #{endDate}
+        AND status = '결제 완료'
+    </select>
+</mapper>
