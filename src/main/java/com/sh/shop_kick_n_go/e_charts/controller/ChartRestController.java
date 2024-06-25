@@ -1,5 +1,6 @@
 package com.sh.shop_kick_n_go.e_charts.controller;
 
+import com.sh.shop_kick_n_go.e_charts.model.dto.AgeDto;
 import com.sh.shop_kick_n_go.e_charts.model.dto.GenderDto;
 import com.sh.shop_kick_n_go.e_charts.model.dto.TodayOrderCntDto;
 import com.sh.shop_kick_n_go.e_charts.model.service.ChartQueryService;
@@ -20,13 +21,17 @@ public class ChartRestController {
 
     @GetMapping("/gender")
     public List<GenderDto> getGenderData() {
-        System.out.println(ChartQueryService.findAllUserGender().get(0).toString());
         return ChartQueryService.findAllUserGender();
     }
 
     @GetMapping("/today-order")
     public List<TodayOrderCntDto> getChartsData() {
         return ChartQueryService.findAllTodayOrderCnt();
+    }
+
+    @GetMapping("/age")
+    public List<AgeDto> getAgeData() {
+        return ChartQueryService.findAllUserAge();
     }
 
 }
