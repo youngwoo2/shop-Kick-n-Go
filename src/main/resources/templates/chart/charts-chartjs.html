@@ -57,146 +57,107 @@
         </div>
       </div>
     </div>
+
+
+    <script>
+      let chart; // 전역 변수로 차트 선언
+
+      function renderChart(type, labels, data) {
+        const container = document.getElementById('chartContainer');
+        container.innerHTML = '<canvas id="chartCanvas" style="max-height: 400px;"></canvas>'; // 기존 캔버스를 새 캔버스로 교체
+        const ctx = document.getElementById('chartCanvas').getContext('2d');
+
+        chart = new Chart(ctx, {
+          type: type,
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Sales',
+              data: data,
+              backgroundColor: 'rgba(75, 192, 192, 0.2)',
+              borderColor: 'rgba(75, 192, 192, 1)',
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      }
+
+      document.getElementById('showDaily').addEventListener('click', function() {
+        fetch('http://localhost:8080/app/api/totalOrders/daily-sales')
+                .then(response => response.json())
+                .then(data => {
+                  const labels = data.map(item => item.orderDate);
+                  const salesData = data.map(item => item.totalPrice);
+                  renderChart('line', labels, salesData);
+                })
+                .catch(error => console.error('Error fetching data:', error));
+      });
+
+      document.getElementById('showWeekly').addEventListener('click', function() {
+        fetch('http://localhost:8080/app/api/totalOrders/weekly-sales')
+                .then(response => response.json())
+                .then(data => {
+                  const labels = data.map(item => item.orderDate);
+                  const salesData = data.map(item => item.totalPrice);
+                  renderChart('line', labels, salesData);
+                })
+                .catch(error => console.error('Error fetching data:', error));
+      });
+
+      document.getElementById('showMonthly').addEventListener('click', function() {
+        fetch('http://localhost:8080/app/api/totalOrders/monthly-sales')
+                .then(response => response.json())
+                .then(data => {
+                  const labels = data.map(item => item.orderDate);
+                  const salesData = data.map(item => item.totalPrice);
+                  renderChart('line', labels, salesData);
+                })
+                .catch(error => console.error('Error fetching data:', error));
+      });
+
+      document.getElementById('showCustom').addEventListener('click', function() {
+        document.getElementById('dateRange').style.display = 'block';
+      });
+
+      document.getElementById('applyDateRange').addEventListener('click', function() {
+        const startDate = document.getElementById('startDate').value;
+        const endDate = document.getElementById('endDate').value;
+
+        fetch(`http://localhost:8080/app/api/totalOrders/period-sales?startDate=${startDate}&endDate=${endDate}`)
+                .then(response => response.json())
+                .then(data => {
+                  const labels = data.map(item => item.orderDate);
+                  const salesData = data.map(item => item.totalPrice);
+                  renderChart('line', labels, salesData);
+                })
+                .catch(error => console.error('Error fetching data:', error));
+      });
+
+      document.getElementById('showLineChart').addEventListener('click', function() {
+        // 데이터를 가져와서 'line' 타입의 차트를 렌더링
+        // 여기에 필요한 데이터를 fetch 해서 가져오고 renderChart 함수를 호출하는 로직을 추가하세요
+      });
+
+      document.getElementById('showBarChart').addEventListener('click', function() {
+        // 데이터를 가져와서 'bar' 타입의 차트를 렌더링
+        // 여기에 필요한 데이터를 fetch 해서 가져오고 renderChart 함수를 호출하는 로직을 추가하세요
+      });
+    </script>
+
+
   </section>
+
 </div>
 
 <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    let chartType = 'daily';
-    let dataType = 'totalSales';
-    let chartView = 'line';
-    const chartCanvas = document.getElementById('chartCanvas');
-    let chart;
-
-    const fetchData = (type, startDate, endDate) => {
-      let url = `/api/totalOrders/${type}-sales`;
-      if (type === 'period' && startDate && endDate) {
-        url = `/api/totalOrders/period-sales?startDate=${startDate}&endDate=${endDate}`;
-      }
-      console.log(`Fetching data from URL: ${url}`);
-      return fetch(url)
-              .then(response => {
-                if (!response.ok) {
-                  throw new Error('Network response was not ok');
-                }
-                return response.json();
-              })
-              .then(data => {
-                console.log('Data fetched:', data); // Log all data fetched from the database
-                return data;
-              })
-              .catch(error => {
-                console.error('Error fetching data:', error);
-              });
-    };
-
-    const processChartData = (data) => {
-      const salesData = {};
-
-      data.forEach(order => {
-        const date = new Date(order.orderDate).toISOString().split('T')[0];
-        salesData[date] = (salesData[date] || 0) + order.totalPrice;
-      });
-
-      console.log('Processed chart data:', salesData);
-      return {
-        labels: Object.keys(salesData).sort(),
-        sales: Object.values(salesData)
-      };
-    };
-
-    const createChart = (labels, data, label, unit, type) => {
-      if (chart) chart.destroy();
-      console.log('Creating chart with labels:', labels, 'and data:', data);
-      chart = new Chart(chartCanvas, {
-        type: type,
-        data: {
-          labels: labels,
-          datasets: [{
-            label: label,
-            data: data,
-            fill: false,
-            borderColor: 'rgba(75, 192, 192, 0.2)',
-            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-            tension: 0.1
-          }]
-        },
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true,
-              ticks: {
-                callback: function(value) {
-                  return value + unit;
-                }
-              }
-            }
-          }
-        }
-      });
-    };
-
-    const updateChart = () => {
-      let startDate, endDate;
-      if (chartType === 'custom') {
-        startDate = document.getElementById('startDate').value;
-        endDate = document.getElementById('endDate').value;
-      }
-      fetchData(chartType, startDate, endDate).then(data => {
-        if (!data) return;
-        const chartData = processChartData(data);
-        const labels = chartData.labels;
-        const dataToShow = chartData.sales;
-        const label = chartType === 'custom' ? '특정 기간' : `${chartType === 'daily' ? '일별' : chartType === 'weekly' ? '주별' : '월별'} 총 매출 금액`;
-        const unit = '원';
-
-        createChart(labels, dataToShow, label, unit, chartView);
-      });
-    };
-
-    document.getElementById('showDaily').addEventListener('click', () => {
-      chartType = 'daily';
-      document.getElementById('dateRange').style.display = 'none';
-      updateChart();
-    });
-
-    document.getElementById('showWeekly').addEventListener('click', () => {
-      chartType = 'weekly';
-      document.getElementById('dateRange').style.display = 'none';
-      updateChart();
-    });
-
-    document.getElementById('showMonthly').addEventListener('click', () => {
-      chartType = 'monthly';
-      document.getElementById('dateRange').style.display = 'none';
-      updateChart();
-    });
-
-    document.getElementById('showCustom').addEventListener('click', () => {
-      chartType = 'custom';
-      document.getElementById('dateRange').style.display = 'block';
-    });
-
-    document.getElementById('applyDateRange').addEventListener('click', () => {
-      updateChart();
-    });
-
-    document.getElementById('showLineChart').addEventListener('click', () => {
-      chartView = 'line';
-      updateChart();
-    });
-
-    document.getElementById('showBarChart').addEventListener('click', () => {
-      chartView = 'bar';
-      updateChart();
-    });
-
-    // Initial load
-    updateChart();
-  });
-</script>
 
 </body>
 </html>
