@@ -1,54 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-  <title>Tables / Data - NiceAdmin Bootstrap Template</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-
-  <!-- Favicons -->
-   <link th:href="@{/assets/img/favicon.png}" rel="icon" />
-  <link th:href="@{/assets/img/apple-touch-icon.png}" rel="apple-touch-icon" />
-
-
-
-
-
-  
-
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.gstatic.com" rel="preconnect" />
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet" />
-
-  <!-- Vendor CSS Files -->
-  <link th:href="@{/assets/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet" />
-  <link th:href="@{/assets/vendor/bootstrap-icons/bootstrap-icons.css}" rel="stylesheet" />
-  <link th:href="@{/assets/vendor/boxicons/css/boxicons.min.css}" rel="stylesheet" />
-  <link th:href="@{/assets/vendor/quill/quill.snow.css}" rel="stylesheet" />
-  <link th:href="@{/assets/vendor/quill/quill.bubble.css}" rel="stylesheet" />
-  <link th:href="@{/assets/vendor/remixicon/remixicon.css}" rel="stylesheet" />
-  <link th:href="@{/assets/vendor/simple-datatables/style.css}" rel="stylesheet" />
-
-  <!-- Template Main CSS File -->
-  <link th:href="@{/assets/css/style.css}" rel="stylesheet" />
-
-  <!-- =======================================================
-  * Template Name: NiceAdmin
-  * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
-  * Updated: Apr 20 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
-</head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
 
 <body>
-
-  <main id="main" class="main">
-
+    <div layout:fragment="content1">
     <div class="pagetitle">
       <h1>상품조회/수정</h1>
       <nav>
@@ -58,8 +14,10 @@
           <li class="breadcrumb-item active">상품조회/수정</li>
         </ol>
       </nav>
+    </div>
     </div><!-- End Page Title -->
 
+    <div layout:fragment="content">
     <section class="section">
       <div class="row">
         <div class="col-lg-12">
@@ -99,7 +57,7 @@
                       <td th:text="*{productId}"></td>
                       <td onclick="makeEditable(this)" th:text="*{category}"></td>
                       <td onclick="makeEditable(this)" th:text="*{productName}"></td>
-                      <td onclick="makeEditable(this)" type="number" th:text="*{price.formatInteger(menuPrice, 3, 'COMMA')}"></td>
+                      <td onclick="makeEditable(this)" type="number" th:text="*{price}"></td>
                       <td onclick="makeEditable(this)" type="number" th:text="*{size}"></td>
                       <td onclick="makeEditable(this)" th:text="*{color}"></td>
                       <td onclick="makeEditable(this)" type="number" th:text="*{inventoryQuantity}"></td>
@@ -298,7 +256,8 @@
       </div>
     </section>
 
-  </main><!-- End #main -->
+
+  <!-- End #main -->
 
 <!--  전체선택/해제 버튼 -->
 <!--  <script th:inline="javascript">-->
@@ -319,7 +278,16 @@
   <script>
     function makeEditable(element) {
 
-      // 현재 셀의 텍스트를 저장
+        // 체크박스 처리
+        const $thisCheck = element.closest('tr').querySelector("[name=checkboxEach]");
+        const $checks = document.querySelectorAll("[name=checkboxEach]");
+        console.log($thisCheck, $checks);
+        [...$checks].forEach(($check) => {
+            $check.checked = false;
+            $check === $thisCheck && ($check.checked = true);
+        });
+
+        // 현재 셀의 텍스트를 저장
       var currentText = element.innerText;
 
       // 이미 인풋 박스가 생성되어 있는지 확인
@@ -374,7 +342,10 @@
       // 다른 필요한 로직 처리
     }
 
-    function saveToDatabase(element) {
+    function saveToDatabase() {
+      // 수정된 데이터 가져오기 (수정한 tr의 checkbox는 체크처리 되어 있을 것이다.)
+      const element = document.querySelector("[name=checkboxEach]:checked");
+
       // 서버로 데이터를 전송
       var row = element.closest('tr'); // 현재 행(tr)을 찾음
       var data = {
@@ -389,9 +360,11 @@
         orderableStatus2: row.querySelector('td:nth-child(10)').innerText // 판매상태
         // 이미지 데이터는 서버에서 따로 처리해야 함 (파일 업로드 등)
       };
+        console.log(data);
+      return;
 
       // fetch API를 사용하여 서버에 데이터 전송
-      fetch('/app/product-tables-data', {
+      fetch('[[@{/product-tables-data}]]', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -434,7 +407,7 @@
       });
 
       // 선택된 상품 코드들을 서버로 전송하여 삭제 요청
-      fetch('/product-tables-data', {
+      fetch('/app/product-tables-data', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -458,7 +431,7 @@
               });
     }
   </script>
-
+  </div>
 </body>
 
 </html>
