@@ -2,11 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default}">
-<head>
-</head>
+
+
 <body>
 
-  <div layout:fragment="content1">
+
+<div layout:fragment="content1">
     <div class="pagetitle">
       <h1>상품조회/수정</h1>
       <nav>
@@ -17,9 +18,9 @@
         </ol>
       </nav>
     </div><!-- End Page Title -->
-  </div>
+</div>
 
-  <div layout:fragment="content">
+<div layout:fragment="content">
     <section class="section">
       <div class="row">
         <div class="col-lg-12">
@@ -58,8 +59,9 @@
                       </th>
                       <td th:text="*{productId}"></td>
                       <td onclick="makeEditable(this)" th:text="*{category}"></td>
-                      <td onclick="makeEditable(this)" th:text="*{productName}"></td>
-                        <td onclick="makeEditable(this)" type="number" th:text="*{price}"></td>                      <td onclick="makeEditable(this)" type="number" th:text="*{size}"></td>
+                        <td onclick="makeEditable(this)" th:text="*{productName}"></td>
+                        <td onclick="makeEditable(this)" type="number" th:text="*{price}"></td>
+                      <td onclick="makeEditable(this)" type="number" th:text="*{size}"></td>
                       <td onclick="makeEditable(this)" th:text="*{color}"></td>
                       <td onclick="makeEditable(this)" type="number" th:text="*{inventoryQuantity}"></td>
                       <td><input type="file" multiple th:text="*{image}"></td>
@@ -253,29 +255,155 @@
 
         </div>
 
-        
       </div>
+
     </section>
+    <script>
+        function makeEditable(element) {
+            // 현재 셀의 텍스트를 저장
+            var currentText = element.innerText;
 
-  </div>
+            // 이미 인풋 박스가 생성되어 있는지 확인
+            var input = element.querySelector('input[type=text]');
+            if (input) {
+                input.focus(); // 이미 있는 인풋 박스에 포커스를 맞춘다.
+                return; // 이미 인풋 박스가 있으면 추가로 생성하지 않음
+            }
 
-  <!-- End #main -->
+            // 인풋 박스 생성
+            input = document.createElement('input');
+            input.type = 'text';
+            input.value = currentText;
 
-<!--  전체선택/해제 버튼 -->
-<!--  <script th:inline="javascript">-->
-<!--    const checkboxes = document.getElementsByClassName('form-check-input');-->
-<!--    checkboxes.forEach((checkbox) => {-->
-<!--      checkbox.checked = selectAll.checked;-->
-<!--    })-->
-<!--  </script>-->
+            var originalText = currentText; // 원래 텍스트를 저장해둠
 
-<!--  <script>-->
-<!--    $('input:checkbox[name=checkboxEach]').each(function (index){-->
-<!--      if($(this).is(":checked")==true){-->
-<!--        console.log($(this).val());-->
-<!--      }-->
-<!--    });-->
-<!--  </script>-->
+            input.onblur = function() {
+                if (input.value !== originalText) {
+                    saveChanges(element, input.value);
+                } else {
+                    cancelChanges(element, originalText);
+                }
+            };
+
+            input.onkeydown = function(event) {
+                if (event.key === 'Enter') {
+                    if (input.value !== originalText) {
+                        saveChanges(element, input.value);
+                    } else {
+                        cancelChanges(element, originalText);
+                    }
+                } else if (event.key === 'Escape') {
+                    cancelChanges(element, originalText);
+                }
+            };
+
+            // 셀 내용을 인풋 박스로 대체
+            element.innerText = '';
+            element.appendChild(input);
+            input.focus();
+        }
+
+        function saveChanges(element, newValue) {
+            // 저장 로직 구현
+            element.innerText = newValue;
+            // 다른 필요한 로직 처리
+        }
+
+        function cancelChanges(element, originalValue) {
+            // 취소 로직 구현
+            element.innerText = originalValue;
+            // 다른 필요한 로직 처리
+        }
+
+        function saveToDatabase(element) {
+            // 서버로 데이터를 전송
+            var row = element.closest('tr'); // 현재 행(tr)을 찾음
+            var data = {
+                productId: row.querySelector('td:nth-child(1)').innerText, // 상품코드
+                category: row.querySelector('td:nth-child(2)').innerText, // 카테고리
+                productName: row.querySelector('td:nth-child(3)').innerText, // 상품명
+                price: row.querySelector('td:nth-child(4)').innerText, // 판매가
+                size: row.querySelector('td:nth-child(5)').innerText, // 사이즈
+                color: row.querySelector('td:nth-child(6)').innerText, // 컬러
+                inventoryQuantity: row.querySelector('td:nth-child(7)').innerText, // 재고수량
+                material: row.querySelector('td:nth-child(9)').innerText, // 소재
+                orderableStatus2: row.querySelector('td:nth-child(10)').innerText // 판매상태
+                // 이미지 데이터는 서버에서 따로 처리해야 함 (파일 업로드 등)
+            };
+
+            // fetch API를 사용하여 서버에 데이터 전송
+            fetch('/app/product-tables-data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        console.log('Data saved successfully.');
+                        // 저장 성공 시 추가적인 작업 수행 가능
+                    } else {
+                        console.error('Failed to save data.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error saving data:', error);
+                });
+        }
+
+        // $('#delBtn').click(function (){
+        //   if ($("input:checkbox[name='checkboxEach']:checked").length===0){
+        //     alert("삭제할 항목을 선택해주세요.");
+        //     return;
+        //   }
+        //   $("input:checkbox[name='checkboxEach']:checked").each(function (k,kVal){
+        //     console.log("kVal ::", kVal.parentElement.parentElement.parentElement);
+        //     let a = kVal.parentElement.parentElement.parentElement;
+        //     $(a).remove();
+        //   });
+        // });
+
+        function deleteSelected() {
+            // 선택된 체크박스 모두 가져오기
+            var checkboxes = document.querySelectorAll('input[name="checkboxEach"]:checked');
+
+            // 선택된 상품 코드들을 배열에 담기
+            var selectedProductIds = [];
+            checkboxes.forEach(function(checkbox) {
+                selectedProductIds.push(checkbox.value);
+            });
+
+            // 선택된 상품 코드들을 서버로 전송하여 삭제 요청
+            fetch('/app/product-tables-data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ productIds: selectedProductIds })
+            })
+                .then(response => {
+                    if (response.ok) {
+                        console.log('Selected products deleted successfully.');
+                        // 삭제 성공 시 필요한 작업 수행
+                        // 예를 들어 화면에서 삭제한 행 제거 등
+                        checkboxes.forEach(function(checkbox) {
+                            checkbox.closest('tr').remove(); // 선택된 행 제거
+                        });
+                    } else {
+                        console.error('Failed to delete selected products.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error deleting selected products:', error);
+                });
+        }
+    </script>
+
+</div>
+
+
+
 
 
 </body>
