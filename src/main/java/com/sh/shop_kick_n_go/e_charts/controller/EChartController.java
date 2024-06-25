@@ -8,10 +8,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @Slf4j
-@RequestMapping("/EChart")
+@RequestMapping("chart")
 public class EChartController {
-    @GetMapping("/charts")
-    public String charts(Model model) {
-        return "charts-apexcharts";
+    @GetMapping("/charts-apexcharts")
+    public void charts(Model model) {
+    }
+    @GetMapping("/charts-chartjs")
+    public void getCharts(Model model) {
     }
 }
