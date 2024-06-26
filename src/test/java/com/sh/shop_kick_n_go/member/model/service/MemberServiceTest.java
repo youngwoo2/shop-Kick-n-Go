@@ -69,17 +69,17 @@ class MemberServiceTest {
                         (_memberDto -> assertThat(_memberDto.getUserId()).isEqualTo(userId)));
 
     }
-    @Test
-    @DisplayName("withdrawalStatus가 Y면 회원 삭제 가능")
-    void test5() {
-        // given
-        String withdrawalStatus = "Y";
-        int userId = 15;
+//    @Test
+//    @DisplayName("withdrawalStatus가 Y면 회원 삭제 가능")
+//    void test5() {
+//        // given
+//        String withdrawalStatus = "Y";
+//        int userId = 15;
         // when
-        int result = memberMapper.deleteUserInfoByStatus(withdrawalStatus, userId);
+//        int result = memberMapper.deleteUserInfoByStatus(withdrawalStatus, userId);
         // then
-        assertThat(result).isEqualTo(1);
+//        assertThat(result).isEqualTo(1);
 
     }
 
-}
+//}

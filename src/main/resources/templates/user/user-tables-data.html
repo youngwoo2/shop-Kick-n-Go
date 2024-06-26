@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default}">
+
+<body>
+<div layout:fragment="content1">
+  <div class="pagetitle">
+    <h1>회원정보</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="../dashboard.html">홈</a></li>
+        <li class="breadcrumb-item">상품관리</li>
+        <li class="breadcrumb-item active">상품조회/수정</li>
+      </ol>
+    </nav>
+  </div><!-- End Page Title -->
+</div>
+
+<div layout:fragment="content">
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">회원관리</h5>
+            <p>어서오세요. 회원관리 페이지 입니다.</p>
+
+            <div th:if="${message}" class="alert alert-success" role="alert">
+              <p th:text="${message}"></p>
+            </div>
+
+            <div th:if="${errorMessage}" class="alert alert-danger" role="alert">
+              <p th:text="${errorMessage}"></p>
+            </div>
+
+            <div class="d-flex justify-content-between mb-3">
+              <div>
+                <input type="text" class="form-control" id="searchInput" placeholder="Search">
+              </div>
+              <div>
+                <button type="button" class="btn btn-danger" id="deleteSelectedUsersButton">
+                  회원 삭제
+                </button>
+              </div>
+            </div>
+
+            <form id="deleteSelectedUsersForm" th:action="@{/user/deleteUserInfoByStatus}" method="post">
+              <input type="hidden" name="withdrawalStatus" value="Y">
+              <div class="table-responsive">
+                <table class="table datatable" style="white-space: nowrap;">
+                  <thead>
+                  <tr>
+                    <th><input class="form-check-input" type="checkbox" id="selectAll"></th>
+                    <th><b>회원번호</b></th>
+                    <th>이름</th>
+                    <th>이메일</th>
+                    <th>비밀번호</th>
+                    <th>나이</th>
+                    <th>성별</th>
+                    <th>주소</th>
+                    <th>주소 코드</th>
+                    <th>등급</th>
+                    <th>한달 소비액</th>
+                    <th>가입 일자</th>
+                    <th>탈퇴상태</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr th:each="memberDto : ${memberDtos}" th:object="${memberDto}">
+                    <td><input class="form-check-input user-checkbox" type="checkbox" th:value="*{userId}" th:name="userIds"></td>
+                    <td th:text="*{userId}"></td>
+                    <td th:text="*{userName}"></td>
+                    <td th:text="*{userEmail}"></td>
+                    <td th:text="*{userPassword}"></td>
+                    <td th:text="*{userAge}"></td>
+                    <td th:text="*{gender}"></td>
+                    <td th:text="*{userAddress}"></td>
+                    <td th:text="*{addressCode}"></td>
+                    <td th:text="*{userGrade}"></td>
+                    <td th:text="*{userConsumption}"></td>
+                    <td th:text="*{createdDate}"></td>
+                    <td th:text="*{withdrawalStatus}"></td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div><!-- End Table Responsive -->
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var selectAllCheckbox = document.getElementById('selectAll');
+      var checkboxes = document.querySelectorAll('.user-checkbox');
+
+      selectAllCheckbox.addEventListener('change', function () {
+        checkboxes.forEach(function (checkbox) {
+          checkbox.checked = selectAllCheckbox.checked;
+        });
+      });
+
+      document.getElementById('deleteSelectedUsersButton').addEventListener('click', function () {
+        var form = document.getElementById('deleteSelectedUsersForm');
+        var selectedUserIds = [];
+
+        checkboxes.forEach(function (checkbox) {
+          if (checkbox.checked) {
+            selectedUserIds.push(checkbox.value);
+          }
+        });
+
+        console.log('Selected User IDs for deletion:', selectedUserIds);
+
+        if (selectedUserIds.length === 0) {
+          alert('삭제할 사용자를 선택하세요.');
+          return;
+        }
+
+        // 동적으로 폼 생성 및 제출
+        selectedUserIds.forEach(function (userId) {
+          var input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = 'userIds';
+          input.value = userId;
+          form.appendChild(input);
+        });
+
+        form.submit();
+      });
+    });
+  </script>
+</div>
+</body>
+</html>
