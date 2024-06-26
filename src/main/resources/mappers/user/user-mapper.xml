@@ -47,5 +47,17 @@
         where withdrawal_status = #{withdrawalStatus} and user_id = #{userId}
     </delete>
 
+    <update id="updateUserGrade">
+        <![CDATA[
+    update user_tb
+    set user_grade = case
+        when user_consumption > 0 and user_consumption < 200000 then '일반회원'
+        when user_consumption >= 200000 and user_consumption < 500000 then 'vip'
+        when user_consumption >= 500000 then 'vvip'
+        ELSE user_grade
+    END
+    ]]>
+    </update>
+
 
 </mapper>

@@ -29,6 +29,7 @@
             <p>취소주문 조회를 위해 검색어를 입력하시고, 수정이 필요한 항목을 하나씩 선택하십시오.</p>
 
             <!-- Table with stripped rows -->
+            <form action="" method="post">
             <table class="table datatable">
               <thead>
               <tr>
@@ -44,7 +45,7 @@
               </thead>
               <tbody>
               <tr th:each="order : ${cancelOrders}" th:object="${order}">
-                <td><input type="checkbox" th:value="*{orderId}" class="orderCheckbox"></td>
+                <td><input type="checkbox" th:value="${order.orderId}" class="orderCheckbox" name="canceledOrders"></td>
                 <td th:text="*{orderId}"></td>
                 <td th:text="*{userId}"></td>
                 <td th:text="*{ordererName}"></td>
@@ -56,155 +57,18 @@
               </tbody>
             </table>
             <!-- End Table with stripped rows -->
-
-            <!-- 수정 버튼 -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable">
-              수정
-            </button>
-            <div class="modal fade" id="modalDialogScrollable" tabindex="-1">
-              <div class="modal-dialog modal-dialog-scrollable">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title">상품수정</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-
-                    <div class="row mb-3">
-                      <label for="inputText" class="col-sm-2 col-form-label">상품코드</label>
-                      <div class="col-sm-10">
-                        <input type="text" class="form-control" disabled>
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label class="col-sm-2 col-form-label">카테고리</label>
-                      <div class="col-sm-10">
-                        <select class="form-select" aria-label="Default select example">
-                          <option value="1" selected>men</option>
-                          <option value="2">women</option>
-                          <option value="3">kids</option>
-                        </select>
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="inputText" class="col-sm-2 col-form-label">상품명</label>
-                      <div class="col-sm-10">
-                        <input type="text" class="form-control" required>
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="inputNumber" class="col-sm-2 col-form-label">판매가</label>
-                      <div class="col-sm-10">
-                        <input type="number" class="form-control" placeholder="숫자만 입력 (원)" required>
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="inputNumber" class="col-sm-2 col-form-label">사이즈</label>
-                      <div class="col-sm-10">
-                        <input type="number" class="form-control" placeholder="숫자만 입력" required>
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="inputText" class="col-sm-2 col-form-label">컬러</label>
-                      <div class="col-sm-10">
-                        <input type="text" class="form-control" required>
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="inputNumber" class="col-sm-2 col-form-label">재고수량</label>
-                      <div class="col-sm-10">
-                        <input type="number" class="form-control" placeholder="숫자만 입력 (개)" required>
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="inputNumber" class="col-sm-2 col-form-label">이미지</label>
-                      <div class="col-sm-10">
-                        <input class="form-control" type="file" id="formFile" required>
-                      </div>
-                    </div>
-
-                    <fieldset class="row mb-3">
-                      <legend class="col-form-label col-sm-2 pt-0">소재</legend>
-                      <div class="col-sm-10">
-                        <div class="form-check">
-                          <input class="form-check-input" type="radio" name="gridRadios2" id="gridRadios1" value="option1" checked>
-                          <label class="form-check-label" for="gridRadios1">
-                            가죽
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="radio" name="gridRadios2" id="gridRadios2" value="option2">
-                          <label class="form-check-label" for="gridRadios2">
-                            합성섬유
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="radio" name="gridRadios2" id="gridRadios3" value="option3">
-                          <label class="form-check-label" for="gridRadios3">
-                            캔버스
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="radio" name="gridRadios2" id="gridRadios4" value="option4">
-                          <label class="form-check-label" for="gridRadios4">
-                            메쉬
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="radio" name="gridRadios2" id="gridRadios5" value="option5">
-                          <label class="form-check-label" for="gridRadios5">
-                            기타
-                          </label>
-                        </div>
-                      </div>
-                    </fieldset>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                  </div>
-                </div>
+              <div class="mt-3">
+                <button type="submit" class="btn btn-secondary" name="action" value="approve">취소 승인</button>
+                <button type="submit" class="btn btn-danger" name="action" value="withdraw">취소 거부</button>
               </div>
-            </div><!-- 수정 버튼 끝-->
-
-            <!-- 삭제 버튼 -->
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">
-              삭제
-            </button>
-            <div class="modal fade" id="basicModal" tabindex="-1">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title">상품삭제</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    상품삭제를 완료하시겠습니까?
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-primary">저장</button>
-                  </div>
-                </div>
-              </div>
-            </div><!-- 삭제 버튼 끝 -->
+            </form>
 
           </div>
         </div>
 
       </div>
-
-
     </div>
   </section>
-
 </div>
 
 </body>
