@@ -20,4 +20,6 @@ public interface MemberMapper {
     MemberDto findByUserId(int userId);
 
     void deleteUserInfoByStatus(@Param("userId") String userId, @Param("withdrawalStatus") String withdrawalStatus);
+
+    void updateUserGrade();
 }

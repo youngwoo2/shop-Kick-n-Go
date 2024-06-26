@@ -2,6 +2,7 @@ package com.sh.shop_kick_n_go.manager.controller;
 
 import com.sh.shop_kick_n_go.manager.model.dto.ManagerDto;
 import com.sh.shop_kick_n_go.manager.model.service.ManagerService;
+import com.sh.shop_kick_n_go.member.model.service.MemberService;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequiredArgsConstructor
 public class ManagerController {
     private final ManagerService managerService;
-
+    private final MemberService memberService;
     @PostMapping("/login")
     public String registLoginInfo(@RequestParam("id") String managerEmail, @RequestParam("password") String managerPassword, HttpSession session, RedirectAttributes redirectAttributes) {
 
@@ -34,11 +35,13 @@ public class ManagerController {
 
     @GetMapping("/dashboard")
     public String goDashboard(){
+        memberService.testCode();
         return "/dashboard";
     }
 
     @GetMapping("/login")
     public String failLogin(){
+
         return "login";
     }
 
