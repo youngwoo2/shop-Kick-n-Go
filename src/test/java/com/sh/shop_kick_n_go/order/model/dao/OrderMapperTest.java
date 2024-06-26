@@ -75,7 +75,7 @@ class OrderMapperTest {
 //        int userId = 999;
 //        String ordererName = "이영우";
 //        String ordererAddress = "삼성중앙역";
-//        Timestamp orderDate = "2024-06-01 10:30:00";
+//        Timestamp orderDate = Timestamp.valueOf("2023-01-01 10:30:00");
 //        OrderDto orderDto = new OrderDto();
 //        // 새 데이터 입력
 //
