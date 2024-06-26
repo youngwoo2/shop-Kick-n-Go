@@ -29,7 +29,7 @@
         insert into
         product_tb (category, product_name, price, size, color, inventory_quantity, image, material, orderable_status)
         values(
-        #{category}, #{productName}, #{price}, #{size}, #{color}, #{inventoryQuantity}, #{image}, #{material}, #{orderableStatus2}
+        #{category}, #{productName}, #{price}, #{size}, #{color}, #{inventoryQuantity}, #{image}, #{material}, '판매중'
         )
     </insert>
 
@@ -46,8 +46,4 @@
             orderable_status = #{orderableStatus2}
         where product_id = #{productId}
     </update>
-    <delete id="deleteProduct">
-        delete from product_tb
-        where product_id = #{productId}
-    </delete>
 </mapper>
