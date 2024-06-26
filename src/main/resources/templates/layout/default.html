@@ -399,35 +399,42 @@
             </a>
             <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a th:href="@{/product-forms-elements}">
+                    <a th:href="@{/product-regist}">
                         <i class="bi bi-circle"></i><span>상품등록</span>
                     </a>
                 </li>
                 <li>
-                    <a th:href="@{/product-tables-data}">
+                    <a th:href="@{/product-search-update}">
                         <i class="bi bi-circle"></i><span>상품조회/수정</span>
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/product-delete}">
+                        <i class="bi bi-circle"></i><span>상품삭제</span>
                     </a>
                 </li>
             </ul>
         </li><!-- 상품관리 Nav 끝 -->
 
+
+
         <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-layout-text-window-reverse"></i><span>Tables</span><i class="bi bi-chevron-down ms-auto"></i>
+            <a class="nav-link collapsed" data-bs-target="#user-management-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-layout-text-window-reverse"></i><span>회원관리</span><i class="bi bi-chevron-down ms-auto"></i>
             </a>
-            <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+            <ul id="user-management-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="tables-general.html">
-                        <i class="bi bi-circle"></i><span>General Tables</span>
+                    <a href="./user/user-tables-data">
+                        <i class="bi bi-circle"></i><span>회원 조회</span>
                     </a>
                 </li>
                 <li>
-                    <a href="tables-data.html">
-                        <i class="bi bi-circle"></i><span>Data Tables</span>
+                    <a href="./user/tables-data.html">
+                        <i class="bi bi-circle"></i><span>탈퇴한 회원 정보 삭제</span>
                     </a>
                 </li>
             </ul>
-        </li><!-- End Tables Nav -->
+        </li>
 
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">

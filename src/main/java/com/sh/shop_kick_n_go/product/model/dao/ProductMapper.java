@@ -15,5 +15,5 @@ public interface ProductMapper {
     // 상품수정
     int updateProduct(ProductDto productDto);
     // 상품삭제
-    List<ProductDto> deleteChecked();
+    List<ProductDto> deleteProduct();
 }
