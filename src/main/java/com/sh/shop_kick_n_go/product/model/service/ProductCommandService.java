@@ -23,7 +23,7 @@ public class ProductCommandService {
         return productMapper.updateProduct(productDto);
     }
 
-    public List<ProductDto> deleteChecked(ProductDto productId) {
-        return productMapper.deleteChecked();
+    public List<ProductDto> deleteProduct(ProductDto productId) {
+        return productMapper.deleteProduct();
     }
 }
