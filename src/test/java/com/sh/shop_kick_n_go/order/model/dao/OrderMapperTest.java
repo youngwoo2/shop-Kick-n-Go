@@ -5,9 +5,11 @@ import com.sh.shop_kick_n_go.order.model.dto.DeliveryDto;
 import com.sh.shop_kick_n_go.order.model.dto.OrderDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.internal.matchers.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -65,5 +67,29 @@ class OrderMapperTest {
                 .isNotNull()
                 .allMatch((c) -> c != null);
     }
+    
+//    @Test
+//    @DisplayName("발송 처리")
+//    void test4() {
+//        // given 임의의 데이터생성
+//        int userId = 999;
+//        String ordererName = "이영우";
+//        String ordererAddress = "삼성중앙역";
+//        Timestamp orderDate = "2024-06-01 10:30:00";
+//        OrderDto orderDto = new OrderDto();
+//        // 새 데이터 입력
+//
+//        // 수정할 데이터
+//
+//
+//        // 기존 데이터를 유지하면서 가격만 변경
+//
+//        // when
+//
+//        // then
+//
+//    }
+
+
 
 }

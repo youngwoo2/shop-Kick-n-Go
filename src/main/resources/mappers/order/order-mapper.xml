@@ -58,7 +58,7 @@
         from
             order_tb
         where
-        status = '결제 완료'
+        status in ('결제 완료', '배송 준비 중', '배송 중', '배송 완료')
     </select>
 
     <select id="findAllCancelOrder" resultMap="orderDtoMap">
