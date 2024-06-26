@@ -3,355 +3,278 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/default}">
 
-
 <body>
-
-
 <div layout:fragment="content1">
     <div class="pagetitle">
-      <h1>상품조회/수정</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="dashboard.html">홈</a></li>
-          <li class="breadcrumb-item">상품관리</li>
-          <li class="breadcrumb-item active">상품조회/수정</li>
-        </ol>
-      </nav>
+        <h1>상품삭제</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="dashboard.html">홈</a></li>
+                <li class="breadcrumb-item">상품관리</li>
+                <li class="breadcrumb-item active">상품삭제</li>
+            </ol>
+        </nav>
     </div>
-    </div><!-- End Page Title -->
-</div>
+</div><!-- End Page Title -->
 
 <div layout:fragment="content">
     <section class="section">
-      <div class="row">
-        <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-12">
 
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">상품조회/수정</h5>
-              <p>상품조회를 위해 검색어를 입력하시고, 수정이 필요한 항목을 하나씩 선택하십시오.</p>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">상품삭제</h5>
+                        <p>삭제가 필요한 항목을 선택하십시오.</p>
 
-              <!-- Table with stripped rows -->
-              <div style="width: 100%; overflow: auto;">
-                <form action="" method="post">
-                <table class="table datatable" style="white-space: nowrap;">
-                  <thead>
-                  <tr>
-<!--                    <th style="width: 20%;">-->
-<!--                      <input class="form-check-input" type="checkbox" id="gridCheck" onclick="selectAll(this)">-->
-<!--                    </th>-->
-                    <th>선택</th>
-                    <th><b>상</b>품코드</th>
-                    <th>카테고리</th>
-                    <th>상품명</th>
-                    <th data-type="number">판매가</th>
-                    <th>사이즈</th>
-                    <th>컬러</th>
-                    <th data-type="number">재고수량</th>
-                    <th>이미지</th>
-                    <th>소재</th>
-                    <th>판매상태</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                    <tr id="list" th:each="product : ${products}" th:object="${product}">
-                      <th style="width: 20%;">
-                        <input class="form-check-input" type="checkbox" name="checkboxEach">
-                      </th>
-                      <td th:text="*{productId}"></td>
-                      <td onclick="makeEditable(this)" th:text="*{category}"></td>
-                        <td onclick="makeEditable(this)" th:text="*{productName}"></td>
-                        <td onclick="makeEditable(this)" type="number" th:text="*{price}"></td>
-                      <td onclick="makeEditable(this)" type="number" th:text="*{size}"></td>
-                      <td onclick="makeEditable(this)" th:text="*{color}"></td>
-                      <td onclick="makeEditable(this)" type="number" th:text="*{inventoryQuantity}"></td>
-                      <td><input type="file" multiple th:text="*{image}"></td>
-                      <td onclick="makeEditable(this)" th:text="*{material}"></td>
-                      <td onclick="makeEditable(this)" th:text="*{orderableStatus2}"></td>
-                    </tr>
-                  </tbody>
-                </table>
-                </form>
-              </div>
-              <!-- End Table with stripped rows -->
+                        <!-- Table with stripped rows -->
+                        <div style="width: 100%; overflow: auto;">
+                            <form action="" method="post">
+                                <table class="table datatable" style="white-space: nowrap;">
+                                    <thead>
+                                    <tr>
+                                        <!--                    <th style="width: 20%;">-->
+                                        <!--                      <input class="form-check-input" type="checkbox" id="gridCheck" onclick="selectAll(this)">-->
+                                        <!--                    </th>-->
+                                        <th>선택</th>
+                                        <th><b>상</b>품코드</th>
+                                        <th>카테고리</th>
+                                        <th>상품명</th>
+                                        <th data-type="number">판매가</th>
+                                        <th>사이즈</th>
+                                        <th>컬러</th>
+                                        <th data-type="number">재고수량</th>
+                                        <th>이미지</th>
+                                        <th>소재</th>
+                                        <th>판매상태</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr id="list" th:each="product : ${products}" th:object="${product}">
+                                        <th style="width: 20%;">
+                                            <input class="form-check-input" type="checkbox" name="checkboxEach">
+                                        </th>
+                                        <td id="productId" th:text="*{productId}"></td>
+                                        <td id="category" th:text="*{category}"></td>
+                                        <td id="productName" th:text="*{productName}"></td>
+                                        <td id="price" type="number" th:text="*{price}"></td>
+                                        <td id="size" type="number" th:text="*{size}"></td>
+                                        <td id="color" th:text="*{color}"></td>
+                                        <td id="inventoryQuantity" type="number" th:text="*{inventoryQuantity}"></td>
+                                        <td id="image"><input type="file" id="imageInput" multiple th:text="*{image}"></td>
+                                        <td id="material" th:text="*{material}"></td>
+                                        <td id="orderableStatus2" th:text="*{orderableStatus2}"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </form>
+                        </div>
+                        <div class="button-wrapper my-3">
+                            <button class="btn btn-secondary" type="button" id="delBtn">삭제</button>
+                        </div>
 
-<!--              &lt;!&ndash; 수정 버튼 &ndash;&gt;-->
-<!--              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable">-->
-<!--                수정-->
-<!--              </button>-->
-<!--              <div class="modal fade" id="modalDialogScrollable" tabindex="-1">-->
-<!--                <div class="modal-dialog modal-dialog-scrollable">-->
-<!--                  <div class="modal-content">-->
-<!--                    <div class="modal-header">-->
-<!--                      <h5 class="modal-title">상품수정</h5>-->
-<!--                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
-<!--                    </div>-->
-<!--                    <div class="modal-body">-->
+                        <!-- End Table with stripped rows -->
 
-<!--                      <div class="row mb-3">-->
-<!--                        <label for="inputText" class="col-sm-2 col-form-label">상품코드</label>-->
-<!--                        <div class="col-sm-10">-->
-<!--                          <input type="text" class="form-control" disabled>-->
-<!--                        </div>-->
-<!--                      </div>-->
+                        <!--              &lt;!&ndash; 수정 버튼 &ndash;&gt;-->
+                        <!--              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable">-->
+                        <!--                수정-->
+                        <!--              </button>-->
+                        <!--              <div class="modal fade" id="modalDialogScrollable" tabindex="-1">-->
+                        <!--                <div class="modal-dialog modal-dialog-scrollable">-->
+                        <!--                  <div class="modal-content">-->
+                        <!--                    <div class="modal-header">-->
+                        <!--                      <h5 class="modal-title">상품수정</h5>-->
+                        <!--                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+                        <!--                    </div>-->
+                        <!--                    <div class="modal-body">-->
 
-<!--                      <div class="row mb-3">-->
-<!--                        <label class="col-sm-2 col-form-label">카테고리</label>-->
-<!--                        <div class="col-sm-10">-->
-<!--                          <select class="form-select" aria-label="Default select example">-->
-<!--                            <option value="1" selected>남성화</option>-->
-<!--                            <option value="2">여성화</option>-->
-<!--                            <option value="3">아동화</option>-->
-<!--                          </select>-->
-<!--                        </div>-->
-<!--                      </div>-->
+                        <!--                      <div class="row mb-3">-->
+                        <!--                        <label for="inputText" class="col-sm-2 col-form-label">상품코드</label>-->
+                        <!--                        <div class="col-sm-10">-->
+                        <!--                          <input type="text" class="form-control" disabled>-->
+                        <!--                        </div>-->
+                        <!--                      </div>-->
 
-<!--                      <div class="row mb-3">-->
-<!--                        <label for="inputText" class="col-sm-2 col-form-label">상품명</label>-->
-<!--                        <div class="col-sm-10">-->
-<!--                          <input type="text" class="form-control" required>-->
-<!--                        </div>-->
-<!--                      </div>-->
+                        <!--                      <div class="row mb-3">-->
+                        <!--                        <label class="col-sm-2 col-form-label">카테고리</label>-->
+                        <!--                        <div class="col-sm-10">-->
+                        <!--                          <select class="form-select" aria-label="Default select example">-->
+                        <!--                            <option value="1" selected>남성화</option>-->
+                        <!--                            <option value="2">여성화</option>-->
+                        <!--                            <option value="3">아동화</option>-->
+                        <!--                          </select>-->
+                        <!--                        </div>-->
+                        <!--                      </div>-->
 
-<!--                      <div class="row mb-3">-->
-<!--                        <label for="inputNumber" class="col-sm-2 col-form-label">판매가</label>-->
-<!--                        <div class="col-sm-10">-->
-<!--                          <input type="number" class="form-control" placeholder="숫자만 입력 (원)" required>-->
-<!--                        </div>-->
-<!--                      </div>-->
+                        <!--                      <div class="row mb-3">-->
+                        <!--                        <label for="inputText" class="col-sm-2 col-form-label">상품명</label>-->
+                        <!--                        <div class="col-sm-10">-->
+                        <!--                          <input type="text" class="form-control" required>-->
+                        <!--                        </div>-->
+                        <!--                      </div>-->
 
-<!--                      &lt;!&ndash; 판매가 뒤에 '원' 넣기-->
-<!--                      <div class="row mb-5">-->
-<!--                        <div class="input-group mb-3">-->
-<!--                          <input type="text" class="form-control" placeholder="숫자만 입력" aria-label="숫자만 입력" aria-describedby="basic-addon2">-->
-<!--                          <span class="input-group-text" id="basic-addon2">원</span>-->
-<!--                        </div>-->
-<!--                      </div>-->
-<!--                      &ndash;&gt;-->
+                        <!--                      <div class="row mb-3">-->
+                        <!--                        <label for="inputNumber" class="col-sm-2 col-form-label">판매가</label>-->
+                        <!--                        <div class="col-sm-10">-->
+                        <!--                          <input type="number" class="form-control" placeholder="숫자만 입력 (원)" required>-->
+                        <!--                        </div>-->
+                        <!--                      </div>-->
 
-<!--                      <div class="row mb-3">-->
-<!--                        <label for="inputNumber" class="col-sm-2 col-form-label">사이즈</label>-->
-<!--                        <div class="col-sm-10">-->
-<!--                          <input type="number" class="form-control" placeholder="숫자만 입력" required>-->
-<!--                        </div>-->
-<!--                      </div>-->
+                        <!--                      &lt;!&ndash; 판매가 뒤에 '원' 넣기-->
+                        <!--                      <div class="row mb-5">-->
+                        <!--                        <div class="input-group mb-3">-->
+                        <!--                          <input type="text" class="form-control" placeholder="숫자만 입력" aria-label="숫자만 입력" aria-describedby="basic-addon2">-->
+                        <!--                          <span class="input-group-text" id="basic-addon2">원</span>-->
+                        <!--                        </div>-->
+                        <!--                      </div>-->
+                        <!--                      &ndash;&gt;-->
 
-<!--                      <div class="row mb-3">-->
-<!--                        <label for="inputText" class="col-sm-2 col-form-label">컬러</label>-->
-<!--                        <div class="col-sm-10">-->
-<!--                          <input type="text" class="form-control" required>-->
-<!--                        </div>-->
-<!--                      </div>-->
+                        <!--                      <div class="row mb-3">-->
+                        <!--                        <label for="inputNumber" class="col-sm-2 col-form-label">사이즈</label>-->
+                        <!--                        <div class="col-sm-10">-->
+                        <!--                          <input type="number" class="form-control" placeholder="숫자만 입력" required>-->
+                        <!--                        </div>-->
+                        <!--                      </div>-->
 
-<!--                      <div class="row mb-3">-->
-<!--                        <label for="inputNumber" class="col-sm-2 col-form-label">재고수량</label>-->
-<!--                        <div class="col-sm-10">-->
-<!--                          <input type="number" class="form-control" placeholder="숫자만 입력 (개)" required>-->
-<!--                        </div>-->
-<!--                      </div>-->
+                        <!--                      <div class="row mb-3">-->
+                        <!--                        <label for="inputText" class="col-sm-2 col-form-label">컬러</label>-->
+                        <!--                        <div class="col-sm-10">-->
+                        <!--                          <input type="text" class="form-control" required>-->
+                        <!--                        </div>-->
+                        <!--                      </div>-->
 
-<!--                      <div class="row mb-3">-->
-<!--                        <label for="inputNumber" class="col-sm-2 col-form-label">이미지</label>-->
-<!--                        <div class="col-sm-10">-->
-<!--                          <input class="form-control" type="file" id="formFile" required>-->
-<!--                        </div>-->
-<!--                      </div>-->
+                        <!--                      <div class="row mb-3">-->
+                        <!--                        <label for="inputNumber" class="col-sm-2 col-form-label">재고수량</label>-->
+                        <!--                        <div class="col-sm-10">-->
+                        <!--                          <input type="number" class="form-control" placeholder="숫자만 입력 (개)" required>-->
+                        <!--                        </div>-->
+                        <!--                      </div>-->
 
-<!--                      <fieldset class="row mb-3">-->
-<!--                        <legend class="col-form-label col-sm-2 pt-0">소재</legend>-->
-<!--                        <div class="col-sm-10">-->
-<!--                          <div class="form-check">-->
-<!--                            <input class="form-check-input" type="radio" name="gridRadios2" id="gridRadios1" value="option1" checked>-->
-<!--                            <label class="form-check-label" for="gridRadios1">-->
-<!--                              가죽-->
-<!--                            </label>-->
-<!--                          </div>-->
-<!--                          <div class="form-check">-->
-<!--                            <input class="form-check-input" type="radio" name="gridRadios2" id="gridRadios2" value="option2">-->
-<!--                            <label class="form-check-label" for="gridRadios2">-->
-<!--                              합성섬유-->
-<!--                            </label>-->
-<!--                          </div>-->
-<!--                          <div class="form-check">-->
-<!--                            <input class="form-check-input" type="radio" name="gridRadios2" id="gridRadios3" value="option3">-->
-<!--                            <label class="form-check-label" for="gridRadios3">-->
-<!--                              캔버스-->
-<!--                            </label>-->
-<!--                          </div>-->
-<!--                          <div class="form-check">-->
-<!--                            <input class="form-check-input" type="radio" name="gridRadios2" id="gridRadios4" value="option4">-->
-<!--                            <label class="form-check-label" for="gridRadios4">-->
-<!--                              메쉬-->
-<!--                            </label>-->
-<!--                          </div>-->
-<!--                          <div class="form-check">-->
-<!--                            <input class="form-check-input" type="radio" name="gridRadios2" id="gridRadios5" value="option5">-->
-<!--                            <label class="form-check-label" for="gridRadios5">-->
-<!--                              기타-->
-<!--                            </label>-->
-<!--                          </div>-->
-<!--                        </div>-->
-<!--                      </fieldset>-->
-<!--                    </div>-->
-<!--                    <div class="modal-footer">-->
-<!--                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>-->
-<!--                      <button type="button" class="btn btn-primary">저장</button>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>&lt;!&ndash; 수정 버튼 끝&ndash;&gt;-->
+                        <!--                      <div class="row mb-3">-->
+                        <!--                        <label for="inputNumber" class="col-sm-2 col-form-label">이미지</label>-->
+                        <!--                        <div class="col-sm-10">-->
+                        <!--                          <input class="form-control" type="file" id="formFile" required>-->
+                        <!--                        </div>-->
+                        <!--                      </div>-->
 
-              <div class="button-wrapper my-3">
-                <button class="btn btn-secondary" type="submit" onclick="saveToDatabase()">수정</button>
-                <button class="btn btn-secondary" type="submit" id="delBtn" onclick="deleteSelected()">삭제</button>
-              </div>
+                        <!--                      <fieldset class="row mb-3">-->
+                        <!--                        <legend class="col-form-label col-sm-2 pt-0">소재</legend>-->
+                        <!--                        <div class="col-sm-10">-->
+                        <!--                          <div class="form-check">-->
+                        <!--                            <input class="form-check-input" type="radio" name="gridRadios2" id="gridRadios1" value="option1" checked>-->
+                        <!--                            <label class="form-check-label" for="gridRadios1">-->
+                        <!--                              가죽-->
+                        <!--                            </label>-->
+                        <!--                          </div>-->
+                        <!--                          <div class="form-check">-->
+                        <!--                            <input class="form-check-input" type="radio" name="gridRadios2" id="gridRadios2" value="option2">-->
+                        <!--                            <label class="form-check-label" for="gridRadios2">-->
+                        <!--                              합성섬유-->
+                        <!--                            </label>-->
+                        <!--                          </div>-->
+                        <!--                          <div class="form-check">-->
+                        <!--                            <input class="form-check-input" type="radio" name="gridRadios2" id="gridRadios3" value="option3">-->
+                        <!--                            <label class="form-check-label" for="gridRadios3">-->
+                        <!--                              캔버스-->
+                        <!--                            </label>-->
+                        <!--                          </div>-->
+                        <!--                          <div class="form-check">-->
+                        <!--                            <input class="form-check-input" type="radio" name="gridRadios2" id="gridRadios4" value="option4">-->
+                        <!--                            <label class="form-check-label" for="gridRadios4">-->
+                        <!--                              메쉬-->
+                        <!--                            </label>-->
+                        <!--                          </div>-->
+                        <!--                          <div class="form-check">-->
+                        <!--                            <input class="form-check-input" type="radio" name="gridRadios2" id="gridRadios5" value="option5">-->
+                        <!--                            <label class="form-check-label" for="gridRadios5">-->
+                        <!--                              기타-->
+                        <!--                            </label>-->
+                        <!--                          </div>-->
+                        <!--                        </div>-->
+                        <!--                      </fieldset>-->
+                        <!--                    </div>-->
+                        <!--                    <div class="modal-footer">-->
+                        <!--                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>-->
+                        <!--                      <button type="button" class="btn btn-primary">저장</button>-->
+                        <!--                    </div>-->
+                        <!--                  </div>-->
+                        <!--                </div>-->
+                        <!--              </div>&lt;!&ndash; 수정 버튼 끝&ndash;&gt;-->
 
-              <!-- 수정 버튼 -->
-<!--              <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">-->
-<!--                수정-->
-<!--              </button>-->
-<!--              <div class="modal fade" id="basicModal" tabindex="-1">-->
-<!--                <div class="modal-dialog">-->
-<!--                  <div class="modal-content">-->
-<!--                    <div class="modal-header">-->
-<!--                      <h5 class="modal-title">상품수정</h5>-->
-<!--                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
-<!--                    </div>-->
-<!--                    <div class="modal-body">-->
-<!--                      상품수정을 완료하시겠습니까?-->
-<!--                    </div>-->
-<!--                    <div class="modal-footer">-->
-<!--                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>-->
-<!--                      <button type="submit" class="btn btn-primary" >저장</button>-->
-<!--&lt;!&ndash;                      onclick="saveToDatabase(this)"&ndash;&gt;-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>&lt;!&ndash; 수정 버튼 끝 &ndash;&gt;-->
 
-              <!-- 삭제 버튼 -->
-<!--              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">-->
-<!--                삭제-->
-<!--              </button>-->
-<!--              <div class="modal fade" id="basicModal2" tabindex="-1">-->
-<!--                <div class="modal-dialog">-->
-<!--                  <div class="modal-content">-->
-<!--                    <div class="modal-header">-->
-<!--                      <h5 class="modal-title">상품삭제</h5>-->
-<!--                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
-<!--                    </div>-->
-<!--                    <div class="modal-body">-->
-<!--                      상품삭제를 완료하시겠습니까?-->
-<!--                    </div>-->
-<!--                    <div class="modal-footer">-->
-<!--                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>-->
-<!--                      <button type="submit" class="btn btn-primary" id="delBtn">저장</button>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>&lt;!&ndash; 삭제 버튼 끝 &ndash;&gt;-->
+
+                        <!-- 수정 버튼 -->
+                        <!--              <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">-->
+                        <!--                수정-->
+                        <!--              </button>-->
+                        <!--              <div class="modal fade" id="basicModal" tabindex="-1">-->
+                        <!--                <div class="modal-dialog">-->
+                        <!--                  <div class="modal-content">-->
+                        <!--                    <div class="modal-header">-->
+                        <!--                      <h5 class="modal-title">상품수정</h5>-->
+                        <!--                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+                        <!--                    </div>-->
+                        <!--                    <div class="modal-body">-->
+                        <!--                      상품수정을 완료하시겠습니까?-->
+                        <!--                    </div>-->
+                        <!--                    <div class="modal-footer">-->
+                        <!--                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>-->
+                        <!--                      <button type="submit" class="btn btn-primary" >저장</button>-->
+                        <!--&lt;!&ndash;                      onclick="saveToDatabase(this)"&ndash;&gt;-->
+                        <!--                    </div>-->
+                        <!--                  </div>-->
+                        <!--                </div>-->
+                        <!--              </div>&lt;!&ndash; 수정 버튼 끝 &ndash;&gt;-->
+
+                        <!-- 삭제 버튼 -->
+                        <!--              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">-->
+                        <!--                삭제-->
+                        <!--              </button>-->
+                        <!--              <div class="modal fade" id="basicModal2" tabindex="-1">-->
+                        <!--                <div class="modal-dialog">-->
+                        <!--                  <div class="modal-content">-->
+                        <!--                    <div class="modal-header">-->
+                        <!--                      <h5 class="modal-title">상품삭제</h5>-->
+                        <!--                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+                        <!--                    </div>-->
+                        <!--                    <div class="modal-body">-->
+                        <!--                      상품삭제를 완료하시겠습니까?-->
+                        <!--                    </div>-->
+                        <!--                    <div class="modal-footer">-->
+                        <!--                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>-->
+                        <!--                      <button type="submit" class="btn btn-primary" id="delBtn">저장</button>-->
+                        <!--                    </div>-->
+                        <!--                  </div>-->
+                        <!--                </div>-->
+                        <!--              </div>&lt;!&ndash; 삭제 버튼 끝 &ndash;&gt;-->
+
+                    </div>
+                </div>
 
             </div>
-          </div>
+
 
         </div>
-
-      </div>
-
     </section>
-    <script>
-        function makeEditable(element) {
-            // 현재 셀의 텍스트를 저장
-            var currentText = element.innerText;
 
-            // 이미 인풋 박스가 생성되어 있는지 확인
-            var input = element.querySelector('input[type=text]');
-            if (input) {
-                input.focus(); // 이미 있는 인풋 박스에 포커스를 맞춘다.
-                return; // 이미 인풋 박스가 있으면 추가로 생성하지 않음
-            }
 
-            // 인풋 박스 생성
-            input = document.createElement('input');
-            input.type = 'text';
-            input.value = currentText;
+    <!-- End #main -->
 
-            var originalText = currentText; // 원래 텍스트를 저장해둠
+    <!--  전체선택/해제 버튼 -->
+    <!--  <script th:inline="javascript">-->
+    <!--    const checkboxes = document.getElementsByClassName('form-check-input');-->
+    <!--    checkboxes.forEach((checkbox) => {-->
+    <!--      checkbox.checked = selectAll.checked;-->
+    <!--    })-->
+    <!--  </script>-->
 
-            input.onblur = function() {
-                if (input.value !== originalText) {
-                    saveChanges(element, input.value);
-                } else {
-                    cancelChanges(element, originalText);
-                }
-            };
-
-            input.onkeydown = function(event) {
-                if (event.key === 'Enter') {
-                    if (input.value !== originalText) {
-                        saveChanges(element, input.value);
-                    } else {
-                        cancelChanges(element, originalText);
-                    }
-                } else if (event.key === 'Escape') {
-                    cancelChanges(element, originalText);
-                }
-            };
-
-            // 셀 내용을 인풋 박스로 대체
-            element.innerText = '';
-            element.appendChild(input);
-            input.focus();
-        }
-
-        function saveChanges(element, newValue) {
-            // 저장 로직 구현
-            element.innerText = newValue;
-            // 다른 필요한 로직 처리
-        }
-
-        function cancelChanges(element, originalValue) {
-            // 취소 로직 구현
-            element.innerText = originalValue;
-            // 다른 필요한 로직 처리
-        }
-
-        function saveToDatabase(element) {
-            // 서버로 데이터를 전송
-            var row = element.closest('tr'); // 현재 행(tr)을 찾음
-            var data = {
-                productId: row.querySelector('td:nth-child(1)').innerText, // 상품코드
-                category: row.querySelector('td:nth-child(2)').innerText, // 카테고리
-                productName: row.querySelector('td:nth-child(3)').innerText, // 상품명
-                price: row.querySelector('td:nth-child(4)').innerText, // 판매가
-                size: row.querySelector('td:nth-child(5)').innerText, // 사이즈
-                color: row.querySelector('td:nth-child(6)').innerText, // 컬러
-                inventoryQuantity: row.querySelector('td:nth-child(7)').innerText, // 재고수량
-                material: row.querySelector('td:nth-child(9)').innerText, // 소재
-                orderableStatus2: row.querySelector('td:nth-child(10)').innerText // 판매상태
-                // 이미지 데이터는 서버에서 따로 처리해야 함 (파일 업로드 등)
-            };
-
-            // fetch API를 사용하여 서버에 데이터 전송
-            fetch('/app/product-tables-data', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-                .then(response => {
-                    if (response.ok) {
-                        console.log('Data saved successfully.');
-                        // 저장 성공 시 추가적인 작업 수행 가능
-                    } else {
-                        console.error('Failed to save data.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error saving data:', error);
-                });
-        }
+    <!--  <script>-->
+    <!--    $('input:checkbox[name=checkboxEach]').each(function (index){-->
+    <!--      if($(this).is(":checked")==true){-->
+    <!--        console.log($(this).val());-->
+    <!--      }-->
+    <!--    });-->
+    <!--  </script>-->
 
         // $('#delBtn').click(function (){
         //   if ($("input:checkbox[name='checkboxEach']:checked").length===0){
@@ -400,13 +323,7 @@
                 });
         }
     </script>
-
 </div>
-
-
-
-
-
 </body>
 
 </html>
