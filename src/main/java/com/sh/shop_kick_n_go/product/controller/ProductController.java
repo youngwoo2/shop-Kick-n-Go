@@ -1,7 +1,6 @@
 package com.sh.shop_kick_n_go.product.controller;
 
-import com.sh.shop_kick_n_go.product.model.dto.ProductDto;
-import com.sh.shop_kick_n_go.product.model.dto.ProductRegistDto;
+import com.sh.shop_kick_n_go.product.model.dto.*;
 import com.sh.shop_kick_n_go.product.model.service.ProductCommandService;
 import com.sh.shop_kick_n_go.product.model.service.ProductQueryService;
 import lombok.RequiredArgsConstructor;
@@ -15,9 +14,7 @@ import java.util.List;
 
 @Controller
 @Slf4j
-
-@RequestMapping(value = "/")
-
+@RequestMapping(value = "/product")
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductQueryService productQueryService;
@@ -25,10 +22,26 @@ public class ProductController {
 
     @GetMapping("/product-search-update")
     // 상품조회/수정_상품 모두 띄우기
-    public void list(Model model){
+    public void search(Model model){
         log.info("GET /product/search");
         List<ProductDto> products = productQueryService.findAll();
         model.addAttribute("products", products);
+    }
+
+    @PostMapping("/product-search-update")
+    // 상품조회/수정_수정한 값 가져오기
+    public String update(@RequestParam(name = "checkboxEach", required = false) List<Integer> productId, RedirectAttributes redirectAttributes){
+        log.info("POST /product/update");
+        log.debug("productDto = {}", productId);
+        int result = productCommandService.updateProduct(productId);
+//        redirectAttributes.addFlashAttribute("message", "메뉴를 성공적으로 수정했습니다.");
+        return "redirect:/product/product-search-update";
+    }
+
+    @GetMapping("/product-regist")
+    // 상품등록
+    public void regist(Model model){
+        log.info("GET /product/regist");
     }
 
     @PostMapping("/product-regist")
@@ -39,26 +52,6 @@ public class ProductController {
         ProductDto productDto = productRegistDto.toProductDto();
         int result = productCommandService.insertProduct(productDto);
 //        redirectAttributes.addFlashAttribute("message", "메뉴를 성공적으로 등록했습니다.");
-        return "redirect:/product-regist";
+        return "redirect:/product/product-regist";
     }
-
-    @PostMapping("/product-search-update")
-    // 상품조회/수정_수정한 값 가져오기
-    public String update(ProductDto productDto, RedirectAttributes redirectAttributes){
-        log.info("POST /product/update");
-        log.debug("productDto = {}", productDto);
-        int result = productCommandService.updateProduct(productDto);
-//        redirectAttributes.addFlashAttribute("message", "메뉴를 성공적으로 수정했습니다.");
-        return "redirect:/product-search-update";
-    }
-
-//    @PostMapping("/product-delete")
-//    // 상품삭제
-//    public String delete(@ModelAttribute ProductDto productDto, ProductDto productId, RedirectAttributes redirectAttributes){
-//        log.info("POST /product/delete");
-//        log.debug("productRegistDto = {}", productDto);
-//        List<ProductDto> products = productCommandService.deleteProduct(productId);
-////        redirectAttributes.addFlashAttribute("message", "메뉴를 성공적으로 수정했습니다.");
-//        return "redirect:/product-tables-data";
-//    }
 }

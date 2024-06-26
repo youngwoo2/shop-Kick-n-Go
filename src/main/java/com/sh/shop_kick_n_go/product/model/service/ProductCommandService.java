@@ -10,8 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 @Transactional(rollbackFor = Exception.class)
+@RequiredArgsConstructor
 public class ProductCommandService {
     private final ProductMapper productMapper;
 
@@ -19,11 +19,8 @@ public class ProductCommandService {
         return productMapper.insertProduct(productDto);
     }
 
-    public int updateProduct(ProductDto productDto) {
-        return productMapper.updateProduct(productDto);
-    }
 
-    public List<ProductDto> deleteProduct(ProductDto productId) {
-        return productMapper.deleteProduct();
+    public int updateProduct(List<Integer> productId) {
+        return productMapper.updateProduct(productId);
     }
 }
