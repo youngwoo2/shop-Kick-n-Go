@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -17,7 +19,7 @@ public class MemberDto {
     private int userAge;
     private String userName;
     private String userPassword;
-    private Timestamp createdAt;
+    private Timestamp createdDate;
     private String gender;
     private String userAddress;
     private int addressCode;
