@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sh.shop_kick_n_go.seller_inquiry.model.dao.SellerInquiryMapper">
+
+    <resultMap id="SellerInquiryMap" type="com.sh.shop_kick_n_go.seller_inquiry.model.dto.SellerInquiryDto">
+        <id column="seller_inquiry_id" property="sellerInquiryId"/>
+        <result column="order_item_id" property="orderItemId"/>
+        <result column="user_id" property="userId"/>
+        <result column="receipt_date" property="receiptDate"/>
+        <result column="processing_date" property="processingDate"/>
+        <result column="processing_status" property="processingStatus"/>
+        <result column="type" property="type"/>
+        <result column="title" property="title"/>
+        <result column="inquiry_contents" property="inquiryContents"/>
+        <result column="inquiry_reply_contents" property="inquiryReplyContents"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="SellerInquiryMap">
+        SELECT * FROM seller_inquiry_tb
+    </select>
+
+    <select id="findById" resultMap="SellerInquiryMap" parameterType="int">
+        SELECT * FROM seller_inquiry_tb WHERE seller_inquiry_id = #{sellerInquiryId}
+    </select>
+
+    <insert id="insert" parameterType="com.sh.shop_kick_n_go.seller_inquiry.model.dto.SellerInquiryDto">
+        INSERT INTO seller_inquiry_tb (order_item_id, user_id, receipt_date, processing_date, processing_status, type, title, inquiry_contents, inquiry_reply_contents)
+        VALUES (#{orderItemId}, #{userId}, #{receiptDate}, #{processingDate}, #{processingStatus}, #{type}, #{title}, #{inquiryContents}, #{inquiryReplyContents})
+    </insert>
+
+    <update id="update" parameterType="com.sh.shop_kick_n_go.seller_inquiry.model.dto.SellerInquiryDto">
+        UPDATE seller_inquiry_tb
+        SET order_item_id = #{orderItemId}, user_id = #{userId}, receipt_date = #{receiptDate}, processing_date = #{processingDate}, processing_status = #{processingStatus},
+        type = #{type}, title = #{title}, inquiry_contents = #{inquiryContents}, inquiry_reply_contents = #{inquiryReplyContents}
+        WHERE seller_inquiry_id = #{sellerInquiryId}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        DELETE FROM seller_inquiry_tb WHERE seller_inquiry_id = #{sellerInquiryId}
+    </delete>
+</mapper>
