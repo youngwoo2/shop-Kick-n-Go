@@ -2,7 +2,9 @@ package com.sh.shop_kick_n_go.member.model.dao;
 
 
 import com.sh.shop_kick_n_go.member.model.dto.MemberDto;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -17,5 +19,5 @@ public interface MemberMapper {
 
     MemberDto findByUserId(int userId);
 
-    int deleteUserInfoByStatus(String withdrawalStatus, int userId);
+    void deleteUserInfoByStatus(@Param("userId") String userId, @Param("withdrawalStatus") String withdrawalStatus);
 }
