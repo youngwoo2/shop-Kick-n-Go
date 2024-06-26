@@ -72,4 +72,23 @@ public class OrderController {
 
         return "redirect:/order/delivery-tables-data";
     }
+
+    @PostMapping("/cancel-tables-data")
+    public String cancelProcessing(@RequestParam(name = "canceledOrders", required = false) List<Integer> canceledOrders,
+                                   @RequestParam(name = "action") String action) {
+        switch (action) {
+            case "approve" :
+                log.debug("approving orders: {}", canceledOrders);
+                int approveResult = orderCommandService.cancelOrderApprove(canceledOrders);
+                break;
+            case "withdraw" :
+                log.debug("withdrawing orders: {}", canceledOrders);
+                int withdrawResult = orderCommandService.cancelOrderWithdraw(canceledOrders);
+                break;
+            default:
+                log.warn("Unknown action: {}", action);
+                break;
+        }
+        return "redirect:/order/cancel-tables-data";
+    }
 }
