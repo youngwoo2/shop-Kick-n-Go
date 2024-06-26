@@ -46,4 +46,8 @@
             orderable_status = #{orderableStatus2}
         where product_id = #{productId}
     </update>
+    <delete id="deleteProduct">
+        delete from product_tb
+        where product_id = #{productId}
+    </delete>
 </mapper>

@@ -57,7 +57,7 @@ public class ProductController {
 //    public String delete(@ModelAttribute ProductDto productDto, ProductDto productId, RedirectAttributes redirectAttributes){
 //        log.info("POST /product/delete");
 //        log.debug("productRegistDto = {}", productDto);
-//        List<ProductDto> products = productCommandService.deleteChecked(productId);
+//        List<ProductDto> products = productCommandService.deleteProduct(productId);
 ////        redirectAttributes.addFlashAttribute("message", "메뉴를 성공적으로 수정했습니다.");
 //        return "redirect:/product-tables-data";
 //    }
