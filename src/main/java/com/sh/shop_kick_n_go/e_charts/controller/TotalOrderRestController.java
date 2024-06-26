@@ -26,6 +26,13 @@ public class TotalOrderRestController {
         LocalDate endDate = now;
 
         return totalOrderService.getDailySales(startDate, endDate);
+
+    }
+    @GetMapping("/daily-sales-sum")
+    public int getDailySalesSum() {
+        LocalDate now = LocalDate.now();
+        LocalDate startDate = now.minusDays(1); // 최근 1일 데이터
+        return totalOrderService.getDailySales(startDate, now).stream().mapToInt(TotalOrderDto::getTotalPrice).sum();
     }
 
     @GetMapping("/weekly-sales")
@@ -45,6 +52,13 @@ public class TotalOrderRestController {
 
         return totalOrderService.getMonthlySales(startDate, endDate);
     }
+    @GetMapping("/monthly-sales-sum")
+    public int getMonthlySalesSum() {
+        LocalDate now = LocalDate.now();
+        LocalDate startDate = now.minusMonths(1); // 최근 1개월 데이터
+        return totalOrderService.getMonthlySales(startDate, now).stream().mapToInt(TotalOrderDto::getTotalPrice).sum();
+    }
+
 
     @GetMapping("/period-sales")
     public List<TotalOrderDto> getPeriodSales(LocalDate startDate, LocalDate endDate) {

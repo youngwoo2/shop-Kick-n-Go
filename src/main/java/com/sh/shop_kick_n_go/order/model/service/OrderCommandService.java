@@ -22,4 +22,12 @@ public class OrderCommandService {
     public int processCompletion(List<Integer> selectedOrders) {
         return orderMapper.processCompletion(selectedOrders);
     }
+
+    public int cancelOrderApprove(List<Integer> canceledOrders) {
+        return orderMapper.cancelOrderApprove(canceledOrders);
+    }
+
+    public int cancelOrderWithdraw(List<Integer> canceledOrders) {
+        return orderMapper.cancelOrderWithdraw(canceledOrders);
+    }
 }
