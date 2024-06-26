@@ -41,7 +41,7 @@
 <!-- ======= Header ======= -->
 <header id="header" class="header fixed-top d-flex align-items-center">
     <div class="d-flex align-items-center justify-content-between">
-        <a href="index.html" class="logo d-flex align-items-center">
+        <a th:href="@{/dashboard}" class="logo d-flex align-items-center">
             <img src="assets/img/logo.png" alt="">
             <span class="d-none d-lg-block">NiceAdmin</span>
         </a>
@@ -243,7 +243,7 @@
     <ul class="sidebar-nav" id="sidebar-nav">
 
         <li class="nav-item">
-            <a class="nav-link " href="index.html">
+            <a class="nav-link " th:href="@{/dashboard}">
                 <i class="bi bi-grid"></i>
                 <span>Dashboard</span>
             </a>
@@ -379,17 +379,17 @@
             </a>
             <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a href="./order/order-tables-data">
+                    <a th:href="@{/order/order-tables-data}">
                         <i class="bi bi-circle"></i><span>통합주문검색</span>
                     </a>
                 </li>
                 <li>
-                    <a href="./order/delivery-tables-data">
+                    <a th:href="@{/order/delivery-tables-data}">
                         <i class="bi bi-circle"></i><span>배송관리</span>
                     </a>
                 </li>
                 <li>
-                    <a href="./order/cancel-tables-data">
+                    <a th:href="@{/order/cancel-tables-data}">
                         <i class="bi bi-circle"></i><span>취소주문관리</span>
                     </a>
                 </li>

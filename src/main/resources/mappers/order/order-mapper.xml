@@ -69,4 +69,59 @@
         where
             status = '주문 취소'
     </select>
+
+    <update id="updateOrder">
+        UPDATE
+            order_tb
+        SET
+            status = '배송 중'
+        WHERE
+            order_id in
+        <foreach
+                collection="selectedOrders"
+                item="orderId"
+                open="("
+                separator=","
+                close=")"
+                >
+            #{orderId}
+        </foreach>
+    </update>
+
+    <update id="processCanceling">
+        UPDATE
+        order_tb
+        SET
+        status = '주문 취소'
+        WHERE
+        order_id in
+        <foreach
+                collection="selectedOrders"
+                item="orderId"
+                open="("
+                separator=","
+                close=")"
+        >
+            #{orderId}
+        </foreach>
+    </update>
+
+    <update id="processCompletion">
+        UPDATE
+        order_tb
+        SET
+        status = '배송 완료'
+        WHERE
+        order_id in
+        <foreach
+                collection="selectedOrders"
+                item="orderId"
+                open="("
+                separator=","
+                close=")"
+        >
+            #{orderId}
+        </foreach>
+    </update>
+
 </mapper>
