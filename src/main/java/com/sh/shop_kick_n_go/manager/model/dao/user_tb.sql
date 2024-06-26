@@ -112,6 +112,8 @@ SET user_consumption = CASE
     END
 WHERE user_grade IN ('일반회원', 'vip회원', 'vvip회원');
 
+select *
+from user_tb;
 
 UPDATE user_tb SET user_consumption =
                        CASE

@@ -40,6 +40,7 @@ public class MemberController {
         return "user/user-tables-data";
     }
 
+    // WithdrawalStatus 가 'Y' 인 경우 회원 정보 삭제 가능
     @PostMapping("/deleteUserInfoByStatus")
     public String deleteUserInfoByStatus(@RequestParam("userIds") List<String> userIds,
                                          @RequestParam("withdrawalStatus") String withdrawalStatus,
@@ -54,10 +55,6 @@ public class MemberController {
         }
         return "redirect:/user/user-tables-data";
     }
-//    @GetMapping("/user-tables-data")
-//    public String goTable(){
-//        return "user/user-tables-data";
-//    }
 
 }
 

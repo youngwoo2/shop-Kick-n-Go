@@ -80,6 +80,21 @@ class MemberServiceTest {
         // then
 //        assertThat(result).isEqualTo(1);
 
+
+//        @Test
+//        @DisplayName("유저 grade 업데이트하는 쿼리 만들어보자 ")
+//        void test6() {
+//            // given
+//            int userId =22;
+//            // when
+//            int result  = memberMapper.updateUserGrade();
+//            // then
+//            assertThat(result).isNotNull()
+//                    .satisfies(re -> assertThat(result)).isEqualTo(1);
+//
+//        }
     }
+
+
 
 //}
