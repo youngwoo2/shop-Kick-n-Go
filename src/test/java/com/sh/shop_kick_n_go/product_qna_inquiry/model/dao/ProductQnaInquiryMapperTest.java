@@ -56,7 +56,6 @@ public class ProductQnaInquiryMapperTest {
     }
 
     @Test
-    @Disabled
     @Transactional
     public void testDelete() {
         int result = productQnaInquiryMapper.delete(1);
