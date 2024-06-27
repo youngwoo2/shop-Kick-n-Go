@@ -19,8 +19,7 @@ public class ProductCommandService {
         return productMapper.insertProduct(productDto);
     }
 
-
-    public int updateProduct(List<Integer> productId) {
-        return productMapper.updateProduct(productId);
+    public int updateProduct(ProductDto productDto) {
+        return productMapper.updateProduct(productDto);
     }
 }

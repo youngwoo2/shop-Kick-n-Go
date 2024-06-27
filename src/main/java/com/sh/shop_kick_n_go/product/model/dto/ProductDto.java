@@ -20,7 +20,7 @@ public class ProductDto {
     private OrderableStatus2 orderableStatus2;
 
     public ProductDto(Category category, String productName, int price, int size, String color,
-                      int inventoryQuantity, String image, Material material, OrderableStatus2 orderableStatus2) {
+                      int inventoryQuantity, String image, Material material) {
         this.category = category;
         this.productName = productName;
         this.price = price;
@@ -29,6 +29,5 @@ public class ProductDto {
         this.inventoryQuantity = inventoryQuantity;
         this.image = image;
         this.material = material;
-        this.orderableStatus2 = orderableStatus2;
     }
 }

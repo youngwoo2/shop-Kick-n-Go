@@ -29,13 +29,15 @@
         insert into
         product_tb (category, product_name, price, size, color, inventory_quantity, image, material, orderable_status)
         values(
-        #{category}, #{productName}, #{price}, #{size}, #{color}, #{inventoryQuantity}, #{image}, #{material}, '판매중'
+        #{category}, #{productName}, #{price}, #{size}, #{color}, #{inventoryQuantity}, #{image}, #{material},
+        if(#{inventoryQuantity} > 0, '판매중', '품절')
         )
     </insert>
 
     <update id="updateProduct">
         update product_tb
-        set category = #{category},
+        set
+            category = #{category},
             product_name = #{productName},
             price = #{price},
             size = #{size},

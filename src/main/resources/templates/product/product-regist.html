@@ -27,7 +27,7 @@
               <h5 class="card-title">상품등록</h5>
 
               <!-- 상품등록 -->
-              <form action="" method="post">
+              <form action="" method="post" name="form">
                 <div class="row mb-3">
                     <label class="col-sm-2 col-form-label">카테고리</label>
                     <div class="col-sm-10">
@@ -91,35 +91,35 @@
                   </div>
                 </div>
 
-                <fieldset class="row mb-3" id="material">
+                <fieldset class="row mb-3">
                   <legend class="col-form-label col-sm-2 pt-0">소재</legend>
                   <div class="col-sm-10">
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="gridRadios2" id="gridRadios1" value="option1" checked>
+                      <input class="form-check-input" type="radio" name="material" id="gridRadios1" value="option1" checked>
                       <label class="form-check-label" for="gridRadios1">
                         가죽
                       </label>
                     </div>
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="gridRadios2" id="gridRadios2" value="option2">
+                      <input class="form-check-input" type="radio" name="material" id="gridRadios2" value="option2">
                       <label class="form-check-label" for="gridRadios2">
                         합성섬유
                       </label>
                     </div>
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="gridRadios2" id="gridRadios3" value="option3">
+                      <input class="form-check-input" type="radio" name="material" id="gridRadios3" value="option3">
                       <label class="form-check-label" for="gridRadios3">
                         캔버스
                       </label>
                     </div>
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="gridRadios2" id="gridRadios4" value="option4">
+                      <input class="form-check-input" type="radio" name="material" id="gridRadios4" value="option4">
                       <label class="form-check-label" for="gridRadios4">
                         메쉬
                       </label>
                     </div>
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="gridRadios2" id="gridRadios5" value="option5">
+                      <input class="form-check-input" type="radio" name="material" id="gridRadios5" value="option5">
                       <label class="form-check-label" for="gridRadios5">
                         기타
                       </label>
@@ -131,63 +131,47 @@
                   <button class="btn btn-secondary" type="button" id="submitBtn">저장</button>
                 </div>
 
-<!--                 Basic Modal-->
-<!--                <div class="row justify-content-center">-->
-<!--                  <div class="col-auto">-->
-<!--                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">-->
-<!--                      등록-->
-<!--                    </button>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--                <div class="modal fade" id="basicModal" tabindex="-1">-->
-<!--                  <div class="modal-dialog">-->
-<!--                    <div class="modal-content">-->
-<!--                      <div class="modal-header">-->
-<!--                        <h5 class="modal-title">상품등록</h5>-->
-<!--                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
-<!--                      </div>-->
-<!--                      <div class="modal-body">-->
-<!--                        상품등록을 완료하시겠습니까?-->
-<!--                      </div>-->
-<!--                      <div class="modal-footer">-->
-<!--                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>-->
-<!--                        <button type="submit" class="btn btn-primary" id="submitBtn">저장</button>-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </div>&lt;!&ndash; End Basic Modal&ndash;&gt;-->
-
-              </form><!-- End General Form Elements -->
+              </form> <!-- End General Form Elements -->
 
             </div>
           </div>
-
         </div>
       </div>
     </section>
 
+    <script th:src="@{/assets/js/jquery-3.7.1.js}"></script>
+    <script
+            src="https://code.jquery.com/jquery-3.7.1.js"
+            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+            crossorigin="anonymous">
+    </script>
     <script>
       document.querySelector("#submitBtn").onclick = () => {
-        const element = document.querySelector("[name=checkboxEach]:checked");
-        var row = element.closest('form');
-        var fileInput = row.querySelector('.image'); // 파일 input 요소 찾기
-        var originalFile = row.querySelector('td:nth-child(9)').innerText;
-        var image = fileInput.files.length > 0 ? fileInput.files[0].name : originalFile; // 업로드한 파일이름 가져오기
-
         const formData = new FormData();
         // 텍스트 데이터 일일이 추가...
-        formData.append('category', $('#category').val());
-        formData.append('productName', $('#productName').val());
-        formData.append('price', $('#price').val());
-        formData.append('size', $('#size').val());
-        formData.append('color', $('#color').val());
-        formData.append('inventoryQuantity', $('#inventoryQuantity').val());
-        formData.append('image', $('#formFile')[0].files[0]); // 파일 첨부
-        formData.append('material', $('input[name="material"]:checked').val());
+        formData.append('category', document.querySelector('#category').value);
+        formData.append('productName', document.querySelector('#productName').value);
+        formData.append('price', document.querySelector('#price').value);
+        formData.append('size', document.querySelector('#size').value);
+        formData.append('color', document.querySelector('#color').value);
+        formData.append('inventoryQuantity', document.querySelector('#inventoryQuantity').value);
+        // formData.append('image', document.querySelector('#formFile').files[0]); // 파일 첨부
+        formData.append('image', '29979173.jpg'); // 테스트 : 임의의 값 지정
+        formData.append('material', document.querySelector('input[name="material"]:checked').value);
+
+        // formData.append('category', $('option[name="category"]:selected')).val();
+        // // formData.append('category', $('#category').val());
+        // formData.append('productName', $('#productName').val());
+        // formData.append('price', $('#price').val());
+        // formData.append('size', $('#size').val());
+        // formData.append('color', $('#color').val());
+        // formData.append('inventoryQuantity', $('#inventoryQuantity').val());
+        // formData.append('image', $('#formFile')[0].files[0]); // 파일 첨부
+        // formData.append('material', $('input[name="material"]:checked').val());
 
         $.ajax({
-          url: '[[@{/product-regist}]]',
-          type: 'POST',
+          url: '[[@{/product/product-regist}]]',
+          type: 'post',
           contentType : false,
           processData : false,
           data: formData,
@@ -207,7 +191,5 @@
       };
     </script>
     </div><!-- End #main -->
-
 </body>
-
 </html>

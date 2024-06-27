@@ -17,9 +17,8 @@ public class ProductRegistDto {
     private int inventoryQuantity;
     private String image;
     private Material material;
-    private OrderableStatus2 orderableStatus2;
 
     public ProductDto toProductDto() {
-        return new ProductDto(this.category, this.productName, this.price, this.size, this.color, this.inventoryQuantity, this.image, this.material, this.orderableStatus2);
+        return new ProductDto(this.category, this.productName, this.price, this.size, this.color, this.inventoryQuantity, this.image, this.material);
     }
 }
