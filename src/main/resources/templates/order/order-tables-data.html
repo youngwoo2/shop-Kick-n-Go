@@ -34,33 +34,43 @@
                             <tr>
                                 <th><input type="checkbox" id="checkAll"></th>
                                 <th><b>주문번호</b></th>
-                                <th>회원번호</th>
                                 <th>주문자 이름</th>
                                 <th>배송지</th>
                                 <th>주문날짜</th>
                                 <th>주문상태</th>
                                 <th>총금액</th>
+                                <th>상품명</th>
+                                <th>주문 수량</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr th:each="order : ${orders}" th:object="${order}">
                                 <td><input type="checkbox" th:value="*{orderId}" class="orderCheckbox"></td>
                                 <td th:text="*{orderId}"></td>
-                                <td th:text="*{userId}"></td>
                                 <td th:text="*{ordererName}"></td>
                                 <td th:text="*{ordererAddress}"></td>
                                 <td th:text="*{orderDate}"></td>
                                 <td th:text="*{status}" class="order-status"></td>
                                 <td th:text="*{totalPrice}"></td>
+                                <td>
+                                    <ul>
+                                        <li th:each="item : ${order.orderItemList}">
+                                            <span th:text="${item.itemName}"></span>
+                                        </li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul>
+                                        <li th:each="item : ${order.orderItemList}">
+                                            <span th:text="${item.quantity}"></span>
+                                        </li>
+                                    </ul>
+                                </td>
                             </tr>
                             </tbody>
                         </table>
                         <!-- End Table with stripped rows -->
 
-                        <!-- 상태변경 버튼 -->
-                        <div class="d-flex justify-content-end mt-3">
-                            <button type="button" class="btn btn-primary" id="statusChangeButton">상태변경</button>
-                        </div>
                     </div>
                 </div>
 
@@ -69,39 +79,6 @@
 
     </section>
 </div>
-
-<script>
-    // JavaScript to handle "check all" functionality
-    document.getElementById('checkAll').addEventListener('change', function() {
-        const checkboxes = document.querySelectorAll('.orderCheckbox');
-        checkboxes.forEach(checkbox => {
-            checkbox.checked = this.checked;
-        });
-    });
-
-    // JavaScript to handle status change button click
-    document.getElementById('statusChangeButton').addEventListener('click', function() {
-        const selectedOrders = [];
-        const checkboxes = document.querySelectorAll('.orderCheckbox:checked');
-        checkboxes.forEach(checkbox => {
-            selectedOrders.push(checkbox.value);
-        });
-
-        if (selectedOrders.length > 0) {
-            // Update the status of selected orders to "변경 중"
-            checkboxes.forEach(checkbox => {
-                const row = checkbox.closest('tr');
-                const statusCell = row.querySelector('.order-status');
-                statusCell.textContent = '변경 중';
-            });
-
-            // You can send selectedOrders to the server via an AJAX request or form submission
-            console.log('Selected orders for status change:', selectedOrders);
-        } else {
-            alert('선택된 주문이 없습니다.');
-        }
-    });
-</script>
 
 </body>
 

@@ -118,14 +118,17 @@
   <script th:src="@{/assets/js/main.js}"></script>
 
 <!-- Login Fail Alert -->
+
+
 <div id="login-fail-message" th:data-login-fail="${loginFail != null ? loginFail : ''}" style="display:none;"></div>
 <script>
   // 데이터 속성에서 loginFail 메시지를 읽어와 경고창을 띄움
+  document.addEventListener('DOMContentLoaded', (event) => {
   const loginFailElement = document.getElementById('login-fail-message');
   const loginFailMessage = loginFailElement.getAttribute('data-login-fail');
   if (loginFailMessage) {
     alert(loginFailMessage);
-  }
+  }});
 </script>
 
 

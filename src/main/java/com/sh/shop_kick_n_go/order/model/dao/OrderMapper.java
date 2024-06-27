@@ -21,4 +21,8 @@ public interface OrderMapper {
     int processCanceling(List<Integer> selectedOrders);
 
     int processCompletion(List<Integer> selectedOrders);
+
+    int cancelOrderApprove(List<Integer> canceledOrders);
+
+    int cancelOrderWithdraw(List<Integer> canceledOrders);
 }

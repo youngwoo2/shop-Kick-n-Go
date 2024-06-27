@@ -6,8 +6,11 @@ import com.sh.shop_kick_n_go.member.model.dto.MemberDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,11 +21,12 @@ public class MemberService {
     @Autowired
     private MemberMapper memberMapper;
 
+    // 전체 회원 조회
     public List<MemberDto> findAllUser() {
         return memberMapper.findAllUser();
     }
 
-
+    // withdrawalStatus가 'Y' 면 삭제 가능
     public void deleteUserInfoByStatus(List<String> userIds, String withdrawalStatus) {
         for (String userId : userIds) {
             Integer userIdInt = Integer.valueOf(userId);
@@ -44,4 +48,18 @@ public class MemberService {
         }
 
     }
+
+
+    public void updateUserGrade() {
+        memberMapper.updateUserGrade();
+
+    }
+
+    // 매월 1일 0시 0분에 실행 (Cron 표현식: "0 0 0 1 * ?")
+    @Scheduled(cron = "0 0 0 1 * ?")
+    public void updateMonthlyUserGrades() {
+        System.out.println("회원등급 재정리");
+        updateUserGrade();
+    }
+
 }
