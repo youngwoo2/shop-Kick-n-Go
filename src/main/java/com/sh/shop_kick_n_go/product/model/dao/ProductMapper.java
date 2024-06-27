@@ -13,5 +13,5 @@ public interface ProductMapper {
     // 상품등록
     int insertProduct(ProductDto productDto);
     // 상품수정
-    int updateProduct(List<Integer> productId);
+    int updateProduct(ProductDto productDto);
 }

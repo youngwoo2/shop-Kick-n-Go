@@ -25,7 +25,8 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">상품조회/수정</h5>
-            <p>상품조회를 위해 검색어를 입력하시고, 수정이 필요한 항목을 체크한 후 수정 및 저장하십시오.</p>
+            <p>상품조회를 위해 검색어를 입력하시고, 수정이 필요한 항목을 한 행씩 수정 후 저장하십시오.
+               (수정할 항목이 체크되어있지 않으면 체크 후 저장하십시오.)</p>
 
             <!-- Table with stripped rows -->
             <div style="width: 100%; overflow: auto;">
@@ -33,6 +34,9 @@
                 <table class="table datatable" style="white-space: nowrap;">
                   <thead>
                   <tr>
+                    <!--                    <th style="width: 20%;">-->
+                    <!--                      <input class="form-check-input" type="checkbox" id="gridCheck" onclick="selectAll(this)">-->
+                    <!--                    </th>-->
                     <th>선택</th>
                     <th><b>상</b>품코드</th>
                     <th>카테고리</th>
@@ -47,8 +51,10 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr th:each="product : ${products}" th:object="${product}">
-                    <td><input class="form-check-input" type="checkbox" name="checkboxEach" th:value="${product.productId}"></td>
+                  <tr id="list" th:each="product : ${products}" th:object="${product}">
+                    <th style="width: 20%;">
+                      <input class="form-check-input" type="checkbox" name="checkboxEach">
+                    </th>
                     <td th:text="*{productId}"></td>
                     <td onclick="makeEditable(this)" th:text="*{category}"></td>
                     <td onclick="makeEditable(this)" th:text="*{productName}"></td>
@@ -65,12 +71,11 @@
                   </tr>
                   </tbody>
                 </table>
-                <div class="mt-3">
-                  <button class="btn btn-primary" type="submit">저장</button>
-                </div>
               </form>
             </div>
-
+            <div class="button-wrapper my-3">
+              <button class="btn btn-secondary" type="button" id="upBtn">저장</button>
+            </div>
 
             <!-- End Table with stripped rows -->
 
@@ -249,9 +254,14 @@
 
           </div>
         </div>
+
       </div>
+
+
     </div>
   </section>
+
+
   <!-- End #main -->
 
   <!--  전체선택/해제 버튼 -->
@@ -270,7 +280,7 @@
   <!--    });-->
   <!--  </script>-->
 
-  <script th:src="@{/assets/js/jquery-3.7.1.js}"></script>-->
+  <script th:src="@{/assets/js/jquery-3.7.1.js}"></script>
   <script
           src="https://code.jquery.com/jquery-3.7.1.js"
           integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
@@ -278,14 +288,14 @@
   <script>
     function makeEditable(element) {
       // 체크박스 처리
-      // const $thisCheck = element.closest('tr').querySelector("[name=checkboxEach]");
-      // const $checks = document.querySelectorAll("[name=checkboxEach]");
-      //
-      // console.log($thisCheck, $checks);
-      // [...$checks].forEach(($check) => {
-      //   $check.checked = false;
-      //   $check === $thisCheck && ($check.checked = true);
-      // });
+      const $thisCheck = element.closest('tr').querySelector("[name=checkboxEach]");
+      const $checks = document.querySelectorAll("[name=checkboxEach]");
+
+      console.log($thisCheck, $checks);
+      [...$checks].forEach(($check) => {
+        $check.checked = false;
+        $check === $thisCheck && ($check.checked = true);
+      });
       console.log(element);
       // 현재 셀의 텍스트를 저장
       var currentText = element.innerText;
@@ -342,12 +352,26 @@
       // 다른 필요한 로직 처리
     }
 
+    // $(document).ready(function() {
+    //   // 이미지 업로드 행의 체크박스 클릭 시 이벤트 처리
+    //   if ($('input[class="image"]').click) {
+    //     $(this).closest('tr').find('.form-check-input').prop('checked', true);
+    //   } else {
+    //     $(this).closest('tr').find('.form-check-input').prop('checked', false);
+    //   }});
+
     document.querySelector("#upBtn").onclick = () => {
       const element = document.querySelector("[name=checkboxEach]:checked");
       var row = element.closest('tr'); // 현재 행(tr)을 찾음
       var fileInput = row.querySelector('.image'); // 파일 input 요소 찾기
       var originalFile = row.querySelector('td:nth-child(9)').innerText;
       var image = fileInput.files.length > 0 ? fileInput.files[0].name : originalFile; // 업로드한 파일이름 가져오기
+      // if (fileInput.files.length > 0){
+      //   var image = fileInput.files[0].name;
+      //   originalFile = image;
+      // } else {
+      //   var image = originalFile;
+      // }
 
       // const formData = new FormData();
       // // 텍스트 데이터 일일이 추가...
@@ -364,7 +388,7 @@
       // formData.append('orderableStatus2', row.querySelector('td:nth-child(11)').innerText);
 
       $.ajax({
-        url: '[[@{/product-search-update}]]',
+        url: '[[@{/product/product-search-update}]]',
         type: 'post',
         // contentType : false,
         // processData : false,
@@ -444,4 +468,5 @@
   </script>
 </div>
 </body>
+
 </html>

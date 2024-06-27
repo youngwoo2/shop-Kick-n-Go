@@ -21,3 +21,4 @@ public class ProductQnaInquiryDto {
     private String inquiryContents;
     private String inquiryReplyContents;
 }
+

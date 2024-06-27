@@ -27,6 +27,7 @@ public class ProductQnaInquiryService {
     }
 
     public int update(ProductQnaInquiryDto productQnaInquiryDto) {
+        System.out.println(productQnaInquiryDto);
         return productQnaInquiryMapper.update(productQnaInquiryDto);
     }
 

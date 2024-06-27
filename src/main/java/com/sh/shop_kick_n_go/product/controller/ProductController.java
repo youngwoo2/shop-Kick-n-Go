@@ -30,10 +30,10 @@ public class ProductController {
 
     @PostMapping("/product-search-update")
     // 상품조회/수정_수정한 값 가져오기
-    public String update(@RequestParam(name = "checkboxEach", required = false) List<Integer> productId, RedirectAttributes redirectAttributes){
+    public String update(ProductDto productDto, RedirectAttributes redirectAttributes){
         log.info("POST /product/update");
-        log.debug("productDto = {}", productId);
-        int result = productCommandService.updateProduct(productId);
+        log.debug("productDto = {}", productDto);
+        int result = productCommandService.updateProduct(productDto);
 //        redirectAttributes.addFlashAttribute("message", "메뉴를 성공적으로 수정했습니다.");
         return "redirect:/product/product-search-update";
     }

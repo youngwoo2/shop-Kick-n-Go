@@ -16,11 +16,13 @@ public class ProductCommandService {
     private final ProductMapper productMapper;
 
     public int insertProduct(ProductDto productDto) {
+        // 실제 서버 로컬 주서에 productDto.image 저장
+        // 로컬에 저장된 주소 string 을 db에 저장
+        //TempProductDto
         return productMapper.insertProduct(productDto);
     }
 
-
-    public int updateProduct(List<Integer> productId) {
-        return productMapper.updateProduct(productId);
+    public int updateProduct(ProductDto productDto) {
+        return productMapper.updateProduct(productDto);
     }
 }
