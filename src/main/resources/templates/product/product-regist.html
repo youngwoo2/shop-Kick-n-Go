@@ -32,9 +32,9 @@
                     <label class="col-sm-2 col-form-label">카테고리</label>
                     <div class="col-sm-10">
                       <select class="form-select" id="category" aria-label="Default select example">
-                        <option value="1" selected>남성화</option>
-                        <option value="2">여성화</option>
-                        <option value="3">아동화</option>
+                        <option value="남성화" selected>남성화</option>
+                        <option value="여성화">여성화</option>
+                        <option value="아동화">아동화</option>
                       </select>
                     </div>
                 </div>
@@ -65,14 +65,14 @@
                 <div class="row mb-3">
                   <label for="inputText" class="col-sm-2 col-form-label">사이즈</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="size" placeholder="(,로 구분)" required>
+                    <input type="text" class="form-control" id="size" required>
                   </div>
                 </div>
 
                 <div class="row mb-3">
                   <label for="inputText3" class="col-sm-2 col-form-label">컬러</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" id="color" placeholder="(,로 구분)" required>
+                    <input type="text" class="form-control" id="color" required>
                   </div>
                 </div>
 
@@ -80,7 +80,6 @@
                   <label for="inputNumber1" class="col-sm-2 col-form-label">재고수량</label>
                   <div class="col-sm-10">
                     <input type="number" class="form-control" id="inventoryQuantity" placeholder="숫자만 입력 (개)" required>
-                    <p>* 수량 입력 시 모든 옵션에 일괄 적용되며, 상품등록 후 '상품조회/수정'에서 변경 가능합니다.</p>
                   </div>
                 </div>
 
@@ -95,31 +94,31 @@
                   <legend class="col-form-label col-sm-2 pt-0">소재</legend>
                   <div class="col-sm-10">
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="material" id="gridRadios1" value="option1" checked>
+                      <input class="form-check-input" type="radio" name="material" id="gridRadios1" value="가죽" checked>
                       <label class="form-check-label" for="gridRadios1">
                         가죽
                       </label>
                     </div>
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="material" id="gridRadios2" value="option2">
+                      <input class="form-check-input" type="radio" name="material" id="gridRadios2" value="합성섬유">
                       <label class="form-check-label" for="gridRadios2">
                         합성섬유
                       </label>
                     </div>
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="material" id="gridRadios3" value="option3">
+                      <input class="form-check-input" type="radio" name="material" id="gridRadios3" value="캔버스">
                       <label class="form-check-label" for="gridRadios3">
                         캔버스
                       </label>
                     </div>
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="material" id="gridRadios4" value="option4">
+                      <input class="form-check-input" type="radio" name="material" id="gridRadios4" value="메쉬">
                       <label class="form-check-label" for="gridRadios4">
                         메쉬
                       </label>
                     </div>
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="material" id="gridRadios5" value="option5">
+                      <input class="form-check-input" type="radio" name="material" id="gridRadios5" value="기타">
                       <label class="form-check-label" for="gridRadios5">
                         기타
                       </label>
