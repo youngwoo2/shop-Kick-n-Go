@@ -3,6 +3,7 @@ package com.sh.shop_kick_n_go.product_qna_inquiry.model.service;
 import com.sh.shop_kick_n_go.product_qna_inquiry.model.dao.ProductQnaInquiryMapper;
 import com.sh.shop_kick_n_go.product_qna_inquiry.model.dto.ProductQnaInquiryDto;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 

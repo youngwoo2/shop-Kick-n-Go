@@ -4,13 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductRegistDto {
-
+public class ProductUpdateDto {
+    private int productId;
     private Category category;
     private String productName;
     private int price;
@@ -19,7 +18,8 @@ public class ProductRegistDto {
     private int inventoryQuantity;
     private MultipartFile image;
     private Material material;
+    private OrderableStatus2 orderableStatus2;
     public ProductDto toProductDto(String uniqueFileUrl) {
-        return new ProductDto(this.category, this.productName, this.price, this.size, this.color, this.inventoryQuantity, uniqueFileUrl, this.material);
+        return new ProductDto(this.productId,this.category, this.productName, this.price, this.size, this.color, this.inventoryQuantity, uniqueFileUrl, this.material,this.orderableStatus2);
     }
 }

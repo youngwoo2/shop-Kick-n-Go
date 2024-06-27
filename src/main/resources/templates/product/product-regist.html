@@ -154,8 +154,8 @@
         formData.append('size', document.querySelector('#size').value);
         formData.append('color', document.querySelector('#color').value);
         formData.append('inventoryQuantity', document.querySelector('#inventoryQuantity').value);
-        // formData.append('image', document.querySelector('#formFile').files[0]); // 파일 첨부
-        formData.append('image', '29979173.jpg'); // 테스트 : 임의의 값 지정
+        formData.append('image', document.querySelector('#formFile').files[0]); // 파일 첨부
+        // formData.append('image', '29979173.jpg'); // 테스트 : 임의의 값 지정
         formData.append('material', document.querySelector('input[name="material"]:checked').value);
 
         // formData.append('category', $('option[name="category"]:selected')).val();

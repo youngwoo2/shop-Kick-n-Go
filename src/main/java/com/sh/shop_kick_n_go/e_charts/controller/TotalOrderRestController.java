@@ -43,6 +43,14 @@ public class TotalOrderRestController {
 
         return totalOrderService.getWeeklySales(startDate, endDate);
     }
+    @GetMapping("/weekly-sales-sum")
+    public int getWeeklySalesSum() {
+        LocalDate now = LocalDate.now();
+        LocalDate startDate = now.minusWeeks(1); // 최근 1주 데이터
+        LocalDate endDate = now;
+
+        return totalOrderService.getWeeklySales(startDate, endDate).stream().mapToInt(TotalOrderDto::getTotalPrice).sum();
+    }
 
     @GetMapping("/monthly-sales")
     public List<TotalOrderDto> getMonthlySales() {
