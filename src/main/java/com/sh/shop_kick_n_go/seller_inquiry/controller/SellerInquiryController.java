@@ -4,10 +4,7 @@ import com.sh.shop_kick_n_go.seller_inquiry.model.dto.SellerInquiryDto;
 import com.sh.shop_kick_n_go.seller_inquiry.model.service.SellerInquiryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,7 +21,7 @@ public class SellerInquiryController {
     public String list(Model model) {
         List<SellerInquiryDto> sellerInquiries = sellerInquiryService.findAll();
         model.addAttribute("sellerInquiries", sellerInquiries);
-        return "sellerInquiries/list";
+        return "qna/user-qna";
     }
 
     @GetMapping("/{id}")
@@ -40,8 +37,8 @@ public class SellerInquiryController {
         return "redirect:/sellerInquiries";
     }
 
-    @PostMapping("/{id}")
-    public String update(@PathVariable int id, SellerInquiryDto sellerInquiryDto) {
+    @PostMapping("/update")
+    public String update(@RequestBody SellerInquiryDto sellerInquiryDto) {
         sellerInquiryService.update(sellerInquiryDto);
         return "redirect:/sellerInquiries";
     }

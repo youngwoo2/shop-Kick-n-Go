@@ -2,29 +2,26 @@ package com.sh.shop_kick_n_go.product_qna_inquiry.controller;
 
 import com.sh.shop_kick_n_go.product_qna_inquiry.model.dto.ProductQnaInquiryDto;
 import com.sh.shop_kick_n_go.product_qna_inquiry.model.service.ProductQnaInquiryService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
 @RequestMapping("/productQnaInquiries")
+@RequiredArgsConstructor
 public class ProductQnaInquiryController {
     private final ProductQnaInquiryService productQnaInquiryService;
-
-    public ProductQnaInquiryController(ProductQnaInquiryService productQnaInquiryService) {
-        this.productQnaInquiryService = productQnaInquiryService;
-    }
 
     @GetMapping
     public String list(Model model) {
         List<ProductQnaInquiryDto> productQnaInquiries = productQnaInquiryService.findAll();
+
         model.addAttribute("productQnaInquiries", productQnaInquiries);
-        return "productQnaInquiries/list";
+
+        return "qna/product-qna";
     }
 
     @GetMapping("/{id}")
@@ -34,15 +31,17 @@ public class ProductQnaInquiryController {
         return "productQnaInquiries/detail";
     }
 
+
     @PostMapping
     public String create(ProductQnaInquiryDto productQnaInquiryDto) {
         productQnaInquiryService.insert(productQnaInquiryDto);
         return "redirect:/productQnaInquiries";
     }
 
-    @PostMapping("/{id}")
-    public String update(@PathVariable int id, ProductQnaInquiryDto productQnaInquiryDto) {
+    @PostMapping("/update")
+    public String update(@RequestBody ProductQnaInquiryDto productQnaInquiryDto) {
         productQnaInquiryService.update(productQnaInquiryDto);
+        System.out.println(productQnaInquiryDto);
         return "redirect:/productQnaInquiries";
     }
 
@@ -51,4 +50,5 @@ public class ProductQnaInquiryController {
         productQnaInquiryService.delete(id);
         return "redirect:/productQnaInquiries";
     }
+
 }
