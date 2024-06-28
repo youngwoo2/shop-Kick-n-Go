@@ -17,18 +17,31 @@
   ![HTML](https://img.shields.io/badge/html-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
   ![CSS](https://img.shields.io/badge/css-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
   ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
-- Framework : ![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
-<img src="https://img.shields.io/badge/MYBATIS-444444?style=for-the-badge&logo=&logoColor=white">
+- Framework : ![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white) <img src="https://img.shields.io/badge/MYBATIS-444444?style=for-the-badge&logo=&logoColor=white">
 - DB : ![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white) 
 - 협업 툴 : <img src="https://img.shields.io/badge/Discord-644?style=for-the-badge&logo=&logoColor=white">  <img src="https://img.shields.io/badge/Notion-12FFFF?style=for-the-badge&logo=&logoColor=white">  <img src="https://img.shields.io/badge/slack-0099FF?style=for-the-badge&logo=&logoColor=white">
 - ERD 다이어그램 : <img src="https://img.shields.io/badge/Erdcloud-99?style=for-the-badge&logo=&logoColor=white">
 
 ## 프로젝트 구조
 ### ERD
--완성본 넣기
+![ERD](src/main/resources/static/image/kickngo_ERD.png)
 
 ### 유스케이스 다이어그램
-- 완성본 넣기
+- 회원 관리
+  ![Use Case 1](src/main/resources/static/image/use1.png)
+- 상품 관리
+  ![Use Case 2](src/main/resources/static/image/use2.png)
+- 판매 관리
+  ![Use Case 3](src/main/resources/static/image/use3.png)
+- 문의 관리
+  ![Use Case 4](src/main/resources/static/image/use4.png)
+- 통계
+  ![Use Case 5](src/main/resources/static/image/use5.png)
+
+### 클래스 다이어그램
+![Class Diagram 1](src/main/resources/static/image/class_diagram1.png)
+![Class Diagram 2](src/main/resources/static/image/class_diagram2.png)
+![Class Diagram 3](src/main/resources/static/image/class_diagram3.png)
 
 ## 역할분담
 - 김도현 : 리더, 통계 Front/Back단 구현, 문의관리 Front단 구현, 코드 총괄 마무리, 프로젝트 발표
@@ -130,16 +143,25 @@
 
 ## 🖋 프로젝트 후기 🖋
 ### 김도현
-- 각자후기
+- 나이스 너무 고생많으셨습니다!
 ### 박정은
-- 각자 후기
+- 프론트, 웹브라우저를 함께 고려해서 구현하는게 처음이라 어렵게 느껴졌다. 이번 프로젝트를 기반으로 추후 프로젝트에서는 추가 기능을 구현해보고 싶다.
 ### 박태준
-- 각자 후기
+- 뒷단과 앞단을  매핑 하는 것도 굉장히 어렵게 느껴졌고,  아직 모르는게 훨씬 더 많아서 사소한것도 공부하면서 하느라 시간이 많이 부족했던 것 같습니다. 아직 많이 부족하다는 것을 더 많이 느꼈고, 공부해야 할 것도 굉장히 많다는걸 한번 더 느낀 시간이였던 것 같습니다.앞으로 꾸준히 공부하여 계속해서 성장할 수 있도록 노력할것입니다!
+
 ### 심재람
-- 각자 후기
+- 열심히 하고 싶어도 건강 관리를 제대로 하지 못하면 몸이 따라주지 못해 할 수 없다는 것을 피부에 와닿도록 느끼게 되었던 것 같습니다. 팀 프로젝트는 개인 프로젝트와 달리, 1명이 있다가 없으면 그 빈자리가 되게 크게 느껴져 남은 팀원들이 업무적으로 큰 부담을 갖게 될 수 있었을텐데 잘 마무리해준 팀원들에게 진심으로 감사합니다. 또, 건강 관리도 자기 관리 중에 하나의 영역인데 그 부분을 제대로 하지 못해 팀 활동에서 1인분을 하지 못해  너무 죄송합니다.
 ### 이영우
-- 각자 후기
+- 지금까지 백엔드 구현만 해보다가 처음으로 스프링을 이용해서 프론트엔드까지 연결시켜보는 소중한 경험이었습니다. 아무래도 프론트엔드는 익숙하지 않다보니 구현에 있어 다양한 어려움들이 많았던것 같습니다. 기본적인 CRUD는 열심히 하여 구현하였으나 트랜잭션처리가 필요한 기능들을 완성하지 못하여 아쉬웠습니다. 또한 기본적인 기능의 구현도 완벽하게 끝내지 못한점도 아쉬었던것 같습니다.
+  다음 최종 프로젝트에서는 철저하게 준비해서 맡은 이슈를 모두 해결하고자 다짐하였습니다.
+
 ### 정성연
-- 각자 후기
+- 이번 프로젝트를 진행하면서 여러 가지를 배울 수 있는 값진 시간이었습니다.
+  특히, 백엔드 구현에서는 큰 어려움 없이 성공적으로 진행할 수 있었습니다.
+  그러나 프론트엔드와 백엔드를 매핑시키는 부분에서 예상보다 많은 어려움을 겪었습니다.
+  백엔드에서 데이터를 잘 처리하더라도, 이를 사용자에게 효율적이고 직관적으로 전달하는 것이 쉽지 않았습니다.
+  또한, 팀원들과의 협업을 통해 문제를 공유하고 해결해 나가는 과정에서 커뮤니케이션의 중요성도 다시 한 번 깨닫게 되었습니다.
+  프로젝트를 마치며, 백엔드 개발에 대한 자신감을 얻은 것뿐만 아니라, 프론트엔드와의 매핑하는 방법에 대해서 더 공부해야겠다는 다짐을 했습니다. 
+
 
 
