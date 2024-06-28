@@ -12,14 +12,7 @@
 
 <div layout:fragment="content1">
   <div class="pagetitle">
-    <h1>Chart.js</h1>
-    <nav>
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="../index.html">Home</a></li>
-        <li class="breadcrumb-item">Charts</li>
-        <li class="breadcrumb-item active">Chart.js</li>
-      </ol>
-    </nav>
+    <h1>매출 통계</h1>
   </div><!-- End Page Title -->
 </div>
 
@@ -33,10 +26,10 @@
           <div class="card-body">
             <h5 class="card-title">매출 그래프</h5>
             <div class="btn-group mb-3" role="group" aria-label="Sales Data">
-              <button type="button" class="btn btn-primary" id="showDaily">일별</button>
-              <button type="button" class="btn btn-secondary" id="showWeekly">주별</button>
-              <button type="button" class="btn btn-secondary" id="showMonthly">월별</button>
-              <button type="button" class="btn btn-secondary" id="showCustom">특정 기간</button>
+              <button type="button" class="btn btn-primary" id="showDaily">Today</button>
+              <button type="button" class="btn btn-secondary" id="showWeekly">Week</button>
+              <button type="button" class="btn btn-secondary" id="showMonthly">Month</button>
+              <button type="button" class="btn btn-secondary" id="showCustom">Select</button>
             </div>
 
             <div id="dateRange" class="mb-3" style="display: none;">
@@ -47,7 +40,6 @@
 
             <div class="btn-group mb-3" role="group" aria-label="Chart Type">
               <button type="button" class="btn btn-primary" id="showLineChart">선 그래프</button>
-              <button type="button" class="btn btn-secondary" id="showBarChart">막대 그래프</button>
             </div>
 
             <div id="chartContainer">

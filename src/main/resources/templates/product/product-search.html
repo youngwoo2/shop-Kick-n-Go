@@ -1,39 +1,42 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout/default}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/default}">
+
+<head>
+  <title>상품조회/수정</title>
+  <script th:src="@{/assets/js/jquery-3.7.1.js}"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+</head>
 
 <body>
-    <div layout:fragment="content1">
-    <div class="pagetitle">
-      <h1>상품조회</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="../dashboard.html">홈</a></li>
-          <li class="breadcrumb-item">상품관리</li>
-          <li class="breadcrumb-item active">상품조회</li>
-        </ol>
-      </nav>
-    </div>
-    </div><!-- End Page Title -->
+<div layout:fragment="content1">
+  <div class="pagetitle">
+    <h1>상품조회/수정</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a th:href="@{/dashboard}">홈</a></li>
+        <li class="breadcrumb-item">상품관리</li>
+        <li class="breadcrumb-item active">상품조회/수정</li>
+      </ol>
+    </nav>
+  </div>
+</div><!-- End Page Title -->
 
-    <div layout:fragment="content">
-    <section class="section">
-      <div class="row">
-        <div class="col-lg-12">
+<div layout:fragment="content">
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">상품조회/수정</h5>
+            <p>상품조회를 위해 검색어를 입력하시고, 수정이 필요한 항목을 한 행씩 수정 후 저장하십시오. (수정할 항목이 체크되어있지 않으면 체크 후 저장하십시오.)</p>
 
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">상품조회</h5>
-              <p>상품조회를 위해 검색창에 관련된 데이터를 입력하십시오.</p>
-
-              <!-- Table with stripped rows -->
-              <div style="width: 100%; overflow: auto;">
-                <form action="/product/product-update" method="post">
+            <!-- Table with stripped rows -->
+            <div style="width: 100%; overflow: auto;">
                 <table class="table datatable" style="white-space: nowrap;">
                   <thead>
                   <tr>
-                    <th><b>상</b>품코드</th>
+                    <th>선택</th>
+                    <th><b>상품코드</b></th>
                     <th>카테고리</th>
                     <th>상품명</th>
                     <th data-type="number">판매가</th>
@@ -46,28 +49,165 @@
                   </tr>
                   </thead>
                   <tbody>
-                    <tr id="list" th:each="product : ${products}" th:object="${product}">
-                      <td th:text="*{productId}"></td>
-                      <td th:text="*{category}"></td>
-                      <td th:text="*{productName}"></td>
-                      <td type="number" th:text="*{price}"></td>
-                      <td type="number" th:text="*{size}"></td>
-                      <td th:text="*{color}"></td>
-                      <td th:text="*{inventoryQuantity}"></td>
-                      <td th:text="*{image}"></td>
-                      <td th:text="*{material}"></td>
-                      <td th:text="*{orderableStatus2}"></td>
-                    </tr>
+                  <tr th:each="product : ${products}" th:object="${product}">
+                    <td>
+                      <input class="form-check-input" type="checkbox" name="checkboxEach">
+                    </td>
+                    <td th:text="*{productId}"></td>
+                    <td onclick="makeEditable(this)" th:text="*{category}"></td>
+                    <td onclick="makeEditable(this)" th:text="*{productName}"></td>
+                    <td onclick="makeEditable(this)" th:text="*{price}"></td>
+                    <td onclick="makeEditable(this)" th:text="*{size}"></td>
+                    <td onclick="makeEditable(this)" th:text="*{color}"></td>
+                    <td onclick="makeEditable(this)" th:text="*{inventoryQuantity}"></td>
+                    <td>
+                      <input type="file" class="image" onchange="handleFileUpload(this)">
+                      <p th:text="*{image}" class="image-path" th:data-image-path="*{image}"></p> <!-- 이미지 경로를 data 속성에 저장 -->
+                      <img th:id="*{productId}" alt="Product Image" src = "">
+                    </td>
+                    <td onclick="makeEditable(this)" th:text="*{material}"></td>
+                    <td onclick="makeEditable(this)" th:text="*{orderableStatus2}"></td>
+                  </tr>
                   </tbody>
                 </table>
-                </form>
-              </div>
             </div>
+            <div class="button-wrapper my-3">
+              <button class="btn btn-secondary" type="button" id="upBtn">저장</button>
+            </div>
+
           </div>
         </div>
       </div>
-    </section>
-  <!-- End #main -->
-  </div>
+    </div>
+  </section>
+
+  <script>
+    function makeEditable(element) {
+      const $thisCheck = element.closest('tr').querySelector("[name=checkboxEach]");
+      const $checks = document.querySelectorAll("[name=checkboxEach]");
+
+      $checks.forEach(($check) => {
+        $check.checked = false;
+        if ($check === $thisCheck) $check.checked = true;
+      });
+
+      var currentText = element.innerText;
+      var input = element.querySelector('input[type=text]');
+      if (input) {
+        input.focus();
+        return;
+      }
+
+      input = document.createElement('input');
+      input.type = 'text';
+      input.value = currentText;
+
+      var originalText = currentText;
+      input.onblur = function () {
+        if (input.value !== originalText) {
+          saveChanges(element, input.value);
+        } else {
+          cancelChanges(element, originalText);
+        }
+      };
+
+      input.onkeydown = function (event) {
+        if (event.key === 'Enter') {
+          if (input.value !== originalText) {
+            saveChanges(element, input.value);
+          } else {
+            cancelChanges(element, originalText);
+          }
+        } else if (event.key === 'Escape') {
+          cancelChanges(element, originalText);
+        }
+      };
+
+      element.innerText = '';
+      element.appendChild(input);
+      input.focus();
+    }
+
+    function saveChanges(element, newValue) {
+      element.innerText = newValue;
+    }
+
+    function cancelChanges(element, originalValue) {
+      element.innerText = originalValue;
+    }
+
+    function handleFileUpload(input) {
+      // You can add your file upload handling logic here
+    }
+
+    document.querySelector("#upBtn").onclick = () => {
+      const formData = new FormData();
+      const row = document.querySelector("input[name='checkboxEach']:checked").closest('tr');
+      const fileInput = row.querySelector('.image');
+      formData.append('productId', row.querySelector('td:nth-child(2)').innerText);
+      formData.append('category', row.querySelector('td:nth-child(3)').innerText);
+      formData.append('productName', row.querySelector('td:nth-child(4)').innerText);
+      formData.append('price', row.querySelector('td:nth-child(5)').innerText);
+      formData.append('size', row.querySelector('td:nth-child(6)').innerText);
+      formData.append('color', row.querySelector('td:nth-child(7)').innerText);
+      formData.append('inventoryQuantity', row.querySelector('td:nth-child(8)').innerText);
+      formData.append('image', fileInput.files[0]);
+      formData.append('material', row.querySelector('td:nth-child(10)').innerText);
+      formData.append('orderableStatus2', row.querySelector('td:nth-child(11)').innerText);
+
+      $.ajax({
+        url: '[[@{/product/product-update}]]',
+        type: 'post',
+        contentType: false,
+        processData: false,
+        data: formData,
+        success: function (data) {
+          alert("수정을 완료하였습니다.");
+        },
+        error: function (error) {
+          console.error('error', error);
+        },
+        complete: function () {
+          console.log('complete');
+        }
+      });
+    };
+
+    function downloadImage(path, productId) {
+      $.ajax({
+        url: `http://localhost:8080/app/product-api/downloadfile?filename=${path}`,  // 이미지 파일 이름이 path로 지정
+        type: 'GET',
+        xhrFields: {
+          responseType: 'blob'
+        },
+        success: function (blob) {
+          const imageUrl = URL.createObjectURL(blob);
+
+          // 로그에 이미지 출력
+          console.log("성공: 이미지 URL - " + imageUrl);
+
+          // 기존 이미지 태그 아래에 새로운 이미지 태그를 생성하여 추가
+
+          $('img#' + productId).attr('src', imageUrl).attr('width', 300).attr('height', 300);
+
+
+        }
+      });
+    }
+
+
+    $(document).ready(function() {
+      $('.image-path').each(function() {
+        const path = $(this).data('image-path');
+        const productId = $(this).closest('tr').find('td').eq(1).text(); // productId를 추출
+        if (path) {
+          downloadImage(path, productId);
+        }
+      });
+    });
+
+  </script>
+</div>
 </body>
+
 </html>

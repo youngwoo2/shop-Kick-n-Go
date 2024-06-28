@@ -35,3 +35,6 @@ mybatis:
 server:
   servlet:
     context-path: /app
+
+file:
+  upload-dir: src/main/resources/static/images
