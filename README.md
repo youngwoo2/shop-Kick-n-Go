@@ -18,7 +18,7 @@
   ![CSS](https://img.shields.io/badge/css-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
   ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
 - Framework : ![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white) <img src="https://img.shields.io/badge/MYBATIS-444444?style=for-the-badge&logo=&logoColor=white">
-- DB : ![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white) 
+- DB : ![MySQL](https://img.shields.io/badge/mysql-4479A1.svg?style=for-the-badge&logo=mysql&logoColor=white) 
 - 협업 툴 : <img src="https://img.shields.io/badge/Discord-644?style=for-the-badge&logo=&logoColor=white">  <img src="https://img.shields.io/badge/Notion-12FFFF?style=for-the-badge&logo=&logoColor=white">  <img src="https://img.shields.io/badge/slack-0099FF?style=for-the-badge&logo=&logoColor=white">
 - ERD 다이어그램 : <img src="https://img.shields.io/badge/Erdcloud-99?style=for-the-badge&logo=&logoColor=white">
 
