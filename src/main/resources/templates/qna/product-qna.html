@@ -218,7 +218,7 @@
 
                 $.ajax({
                     type: 'POST',
-                    url: 'http://localhost:8080/app/productQnaInquiries/update',
+                    url: '[[@{/productQnaInquiries/update}]]',
                     contentType: 'application/json',
                     data: JSON.stringify(formData),
                     success: function(response) {

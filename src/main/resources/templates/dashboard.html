@@ -10,7 +10,7 @@
   <script>
     $(document).ready(function() {
       $.ajax({
-        url: 'http://localhost:8080/app/api/totalOrders/daily-sales-sum',
+        url: '[[@{/api/totalOrders/daily-sales-sum}]]',
         method: 'GET',
         success: function(data) {
           $('#todaySales').text(data +" 원");
@@ -25,7 +25,7 @@
   <script>
     $(document).ready(function() {
       $.ajax({
-        url: 'http://localhost:8080/app/api/totalOrders/weekly-sales-sum',
+        url: '[[@{/api/totalOrders/weekly-sales-sum}]]',
         method: 'GET',
         success: function(data) {
           $('#weekSales').text(data +" 원");
@@ -40,7 +40,7 @@
   <script>
     $(document).ready(function() {
       $.ajax({
-        url: 'http://localhost:8080/app/api/totalOrders/monthly-sales-sum',
+        url: '[[@{/api/totalOrders/monthly-sales-sum}]]',
         method: 'GET',
         success: function(data) {
           $('#monthSales').text(data +" 원");
@@ -60,7 +60,7 @@
     <h1>Dashboard</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/app/order/tables">Home</a></li>
+        <li class="breadcrumb-item"><a href="app/order/tables">Home</a></li>
         <li class="breadcrumb-item active">Dashboard</li>
       </ol>
     </nav>
@@ -172,7 +172,7 @@
                 <script>
                   $(document).ready(function() {
                     $.ajax({
-                      url: 'http://localhost:8080/app/api/e-chart/gender',
+                      url: '[[@{/api/e-chart/age-gender}]]',
                       method: 'GET',
                       dataType: 'json',
                       success: function(data) {
@@ -225,7 +225,7 @@
                 <script>
                   $(document).ready(function() {
                     $.ajax({
-                      url: 'http://localhost:8080/app/api/e-chart/age-gender',
+                      url: '[[@{/api/e-chart/age-gender}]]',
                       method: 'GET',
                       dataType: 'json',
                       success: function(data) {

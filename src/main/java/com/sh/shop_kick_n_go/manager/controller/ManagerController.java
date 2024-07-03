@@ -39,7 +39,7 @@ public class ManagerController {
     @GetMapping("/dashboard")
     public String goDashboard() {
 //        memberService.testCode();
-        return "/dashboard";
+        return "dashboard";
     }
 
     @GetMapping("/login")
