@@ -22,6 +22,7 @@ import java.util.List;
 @RequestMapping("/menu")
 @RequiredArgsConstructor
 public class MenuController {
+    
     private final MenuQueryService menuQueryService;
     private final MenuCommandService menuCommandService;
 
