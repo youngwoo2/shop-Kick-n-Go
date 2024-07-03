@@ -175,7 +175,7 @@
 
     function downloadImage(path, productId) {
       $.ajax({
-        url: `http://localhost:8080/app/product-api/downloadfile?filename=${path}`,  // 이미지 파일 이름이 path로 지정
+        url: `[[@{/product-api/downloadfile?filename=${path}}]]`,  // 이미지 파일 이름이 path로 지정
         type: 'GET',
         xhrFields: {
           responseType: 'blob'

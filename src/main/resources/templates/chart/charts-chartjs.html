@@ -88,7 +88,7 @@
 
       $('#showDaily').click(function() {
         $.ajax({
-          url: 'http://localhost:8080/app/api/totalOrders/daily-sales',
+          url: '[[@{/api/totalOrders/daily-sales}]]',
           method: 'GET',
           dataType: 'json',
           success: function(data) {
@@ -105,7 +105,7 @@
 
       $('#showWeekly').click(function() {
         $.ajax({
-          url: 'http://localhost:8080/app/api/totalOrders/weekly-sales',
+          url: '[[@{/api/totalOrders/weekly-sales}]]',
           method: 'GET',
           dataType: 'json',
           success: function(data) {
@@ -122,7 +122,7 @@
 
       $('#showMonthly').click(function() {
         $.ajax({
-          url: 'http://localhost:8080/app/api/totalOrders/monthly-sales',
+          url: '[[@{/api/totalOrders/monthly-sales}]]',
           method: 'GET',
           dataType: 'json',
           success: function(data) {
@@ -146,7 +146,7 @@
         const endDate = $('#endDate').val();
 
         $.ajax({
-          url: `http://localhost:8080/app/api/totalOrders/period-sales`,
+          url: `[[@{/api/totalOrders/period-sales}]]`,
           method: 'GET',
           data: {
             startDate: startDate,

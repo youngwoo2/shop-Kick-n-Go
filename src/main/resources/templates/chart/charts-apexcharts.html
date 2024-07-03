@@ -27,7 +27,7 @@
             <script>
               $(document).ready(function() {
                 $.ajax({
-                  url: 'http://localhost:8080/app/api/e-chart/gender',
+                  url: '[[@{/api/e-chart/gender}]]',
                   method: 'GET',
                   dataType: 'json',
                   success: function(data) {
@@ -84,7 +84,7 @@
             <script>
               $(document).ready(function() {
                 $.ajax({
-                  url: 'http://localhost:8080/app/api/e-chart/age-gender',
+                  url: '[[@{/api/e-chart/age-gender}]]',
                   method: 'GET',
                   dataType: 'json',
                   success: function(data) {
